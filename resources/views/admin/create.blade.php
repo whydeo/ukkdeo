@@ -52,9 +52,7 @@
             <strong for="">status pegawai</strong>
             <div class="input-group mb-3">
                 <select class="form-control" name="status" id="status">
-
                     <option value="aktif">aktif</option>
-
                 </select>
             </div>
             <strong for="">email</strong>

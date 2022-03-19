@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Data Coba</h2>
+                <h2>Data Pegawai</h2>
             </div>
             <div class="pull-right mt-4 mb-4">
                 <a href="{{ route('pengguna.create') }}" class="btn btn-success">Tambah Data</a>
@@ -23,7 +23,7 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>Name</th>
+            <th>Nama</th>
             <th>No Telepon</th>
             <th>Status</th>
             <th>Level</th>

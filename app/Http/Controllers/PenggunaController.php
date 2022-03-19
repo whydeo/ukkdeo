@@ -31,7 +31,7 @@ class PenggunaController extends Controller
         ->get();
 
         $pengguna = DB::table('penguna')->get();
-        
+
     return view('admin/index',['peng' => $pengguna]);
     }
 
@@ -40,7 +40,7 @@ class PenggunaController extends Controller
     {
         return view('admin.create');    }
 
- 
+
     public function store(Request $request)
     {
         // dd($request);
@@ -62,11 +62,12 @@ class PenggunaController extends Controller
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
+            'level' => $request['level'],
             'password' => Hash::make($request['password']),
         ]);
 
         $user->assignRole('admin')->get();
-        
+
         penguna::create([
             'name'=> $request['name'],
             'no_tlp'=>$request['no_tlp'],
@@ -75,20 +76,20 @@ class PenggunaController extends Controller
             'image'=>$request['image'],
             'email'=>$request['email'],
             'password'=>$request['password'],
-            
+
         ]);
-           
+
             if($request['level'] == 'level'){
                 $id_user = DB::table('users')->where('name', $request['name'])->value('id');
 
                 $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
-    
+
                 $datasave = [
                     'id_user'=>$id_user,
                     'id_penguna'=>$id_penguna,
                 ];
-                
-                DB::table('penguna_has_user')->insert($datasave); 
+
+                DB::table('penguna_has_user')->insert($datasave);
 
             return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
 
@@ -97,12 +98,12 @@ class PenggunaController extends Controller
                 $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
 
                 $id_manager = DB::table('manager')->where('level', $request['level'])->value('id_manager');
-    
+
                 $datasave = [
                     'id_penguna'=>$id_penguna,
                     'id_manager'=>$id_manager,
                 ];
-                
+
                 $inputan = [
                     'name'=> $request['name'],
                     'notlp'=>$request['no_tlp'],
@@ -115,26 +116,26 @@ class PenggunaController extends Controller
                     'updated_at' => date("Y-m-d H:i:s")
                 ];
 
-                DB::table('penguna_has_manager')->insert($datasave); 
+                DB::table('penguna_has_manager')->insert($datasave);
 
-                DB::table('manager')->insert($inputan); 
-                
+                DB::table('manager')->insert($inputan);
+
             return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
 
             } else {
 
 
                 $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
-                
+
                 $id_kasir = DB::table('kasir')->where('level', $request['level'])->value('id_kasir');
-            
+
 
                $datasave = [
                 'id_penguna'=>$id_penguna,
                 'id_kasir'=>$id_kasir,
             ];
 
-               
+
             $inputan = [
                 'name'=> $request['name'],
                 'notlp'=>$request['no_tlp'],
@@ -149,19 +150,19 @@ class PenggunaController extends Controller
 
 
             DB::table('penguna_has_kasir')->insert($datasave);
-            DB::table('kasir')->insert($inputan); 
+            DB::table('kasir')->insert($inputan);
 
             return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
 
 
             }
-           
+
 
             // managefr
-            
-          
+
+
             // return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
-  
+
     }
 
     /**
@@ -181,48 +182,49 @@ class PenggunaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($pengguna)
     {
-        // $pengguna = DB::table('penguna')->where('id_penguna', $id)->get();
+// dd($pengguna);
+        $pengguna= DB::table('penguna')->where('id_penguna', $pengguna)->get();
 
-        // return view('admin/edit', ['pengguna' => $pengguna]);
+        return view('admin/edit', ['pengguna'=>$pengguna]);
 
-        // mengambil data pegawai berdasarkan id yang dipilih
-	$pengguna = DB::table('penguna')->where('id_penguna',$id)->get();
-	// passing data pegawai yang didapat ke view edit.blade.php
-	return view('admin.edit',['pengguna' => $pengguna]);
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(Request $request)
     {
-        DB::table('penguna')->where('id_penguna', $request->id)->update([
-            'name'=> $request['name'],
-            'no_tlp'=>$request['no_tlp'],
-            'level'=>$request['level'],
-            'status'=>$request['status'],
-            'image'=>$request['image'],
-            'email'=>$request['email'],
-            'password'=>$request['password'],
-          ]);
-    
-        //   dd($request);
-        
-            return redirect('admin/dashboard');
+        $request->validate([
+            'name'=>'required',
+            'no_tlp'=>'required',
+            'level'=>'required',
+            'status'=>'required',
+            'email'=>'required',
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
+        ]);
+        // $pengguna = penguna::findOrFail($request->id_penguna);
+
+        // $pengguna = DB::table('penguna')->where('id_penguna', $request->id_penguna)->get();
+
+        // dd($request);
+        // $pengguna->update($request->all());
+
+        // dd($pengguna);
+
+        DB::table('penguna')->update([
+            'name' => $request->name,
+            'no_tlp' => $request->no_tlp,
+            'level' => $request->level,
+            'status' => $request->status,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+ return redirect()->route('pengguna.index')->with('success', "Data pengguna berhasil di update");
+        // return redirect('admin/index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

@@ -29,9 +29,6 @@ Route::resource('pengguna', 'PenggunaController')->middleware('ceklevel:admin');
 
 // Route::get('pengguna/{id}/edit', 'PenggunaController@edit')->name('edit');
 // Route::post('pengguna/{id}/update', 'PenggunaController@update')->name('update');
-
 // Route::get('/pengguna/{id}/edit', [App\Http\Controllers\PenggunaController::class, 'edit'])->name('admin.edit ');
-
-
-Route::get('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'edit'])->name('admin.dashboard.edit ');
-Route::post('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'update']);
+// Route::get('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'edit'])->name('admin.dashboard.edit ');
+// Route::post('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'update']);

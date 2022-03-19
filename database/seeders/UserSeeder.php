@@ -17,14 +17,16 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'name' => 'Admin',
             'email' => 'admin@role.test',
+            'level'=> 'admin',
             'password' => bcrypt('1234')
         ]);
 
         $admin->assignRole('admin');
-        
+
         $manager = User::create([
             'name' => 'Manager',
             'email' => 'manager@role.test',
+            'level'=> 'manager',
             'password' => bcrypt('1234')
         ]);
 
@@ -33,6 +35,7 @@ class UserSeeder extends Seeder
         $kasir = User::create([
                     'name' => 'kasir',
                     'email' => 'kasir@role.test',
+                    'level'=> 'kasir',
                     'password' => bcrypt('1234')
                 ]);
 
