@@ -8,6 +8,9 @@ use App\Models\user;
 use App\Models\kasir;
 use App\Models\manager;
 use DB;
+use Illuminate\Support\Facades\Hash;
+
+use Intervention\Image\Facades\Image;
 class PenggunaController extends Controller
 {
     /**
@@ -21,30 +24,23 @@ class PenggunaController extends Controller
         ->join('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
         ->join('users', 'penguna_has_user.id_user', '=', 'users.id')
         ->join('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
-        ->join('manager', 'penguna_has_manager.id_manager', '=', 'manager.id_manager')
+        ->join('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
         ->join('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
         ->join('kasir', 'penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
         ->select('users.*', 'manager.*','penguna.*','kasir.*')
         ->get();
-    return view('admin/index', compact('peng'));
+
+        $pengguna = DB::table('penguna')->get();
+        
+    return view('admin/index',['peng' => $pengguna]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
-    }
+        return view('admin.create');    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(Request $request)
     {
         // dd($request);
@@ -55,12 +51,12 @@ class PenggunaController extends Controller
             'status'=>'required',
             'email'=>'required',
             'password' => ['required', 'string', 'min:4', 'confirmed'],
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'image'=>'required',
         ]);
 
         $image = $request->file('image');
         $nameImage = $request->file('image')->getClientOriginalName();
-        $thumbImage = Image::make($image->getRealPath())->resize(85, 85);
+        $thumbImage = image::make($image->getRealPath())->resize(85, 85);
         $thumbPath = public_path() . '/image/' . $nameImage;
         $thumbImage = Image::make($thumbImage)->save($thumbPath);
         $user = User::create([
@@ -68,37 +64,103 @@ class PenggunaController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
-        $user->assignRole('penguna')->get();
-         penguna::create([
+
+        $user->assignRole('admin')->get();
+        
+        penguna::create([
             'name'=> $request['name'],
             'no_tlp'=>$request['no_tlp'],
             'level'=>$request['level'],
             'status'=>$request['status'],
+            'image'=>$request['image'],
             'email'=>$request['email'],
+            'password'=>$request['password'],
             
         ]);
-            $id_user = DB::table('users')->where('name', $request['name'])->value('id');
-            $datasave = [
-                'id_penguna'=>$id_penguna,
-                'id_user'=>$id,
-        ];
-            $insert = DB::table('penguna_has_user')->insert($datasave);    
-            $id_manager = DB::table('manager')->where('manager', $request['manager'][$i])->value('id_manager');
+           
+            if($request['level'] == 'level'){
+                $id_user = DB::table('users')->where('name', $request['name'])->value('id');
+
+                $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
     
-            $datasave = [
-                'id_penguna'=>$id_penguna,
-                'id_manager'=>$id_manager,
-            ];
-            $insert = DB::table('penguna_has_manager')->insert($datasave);     
-            $id_kasir = DB::table('kasir')->where('kasir', $request['kasir'][$i])->value('id_kasir');
+                $datasave = [
+                    'id_user'=>$id_user,
+                    'id_penguna'=>$id_penguna,
+                ];
+                
+                DB::table('penguna_has_user')->insert($datasave); 
+
+            return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
+
+            } elseif($request['level'] == 'manager'){
+
+                $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
+
+                $id_manager = DB::table('manager')->where('level', $request['level'])->value('id_manager');
+    
+                $datasave = [
+                    'id_penguna'=>$id_penguna,
+                    'id_manager'=>$id_manager,
+                ];
+                
+                $inputan = [
+                    'name'=> $request['name'],
+                    'notlp'=>$request['no_tlp'],
+                    'level'=>$request['level'],
+                    'status'=>$request['status'],
+                    'image'=>$request['image'],
+                    'email'=>$request['email'],
+                    'password'=>$request['password'],
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ];
+
+                DB::table('penguna_has_manager')->insert($datasave); 
+
+                DB::table('manager')->insert($inputan); 
+                
+            return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
+
+            } else {
+
+
+                $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
+                
+                $id_kasir = DB::table('kasir')->where('level', $request['level'])->value('id_kasir');
             
-            $datasave = [
+
+               $datasave = [
                 'id_penguna'=>$id_penguna,
                 'id_kasir'=>$id_kasir,
             ];
-            $insert = DB::table('penguna_has_kasir')->insert($datasave);
 
-            return redirect()->route('admin/index')->with('success','Data Berhasil di Input');
+               
+            $inputan = [
+                'name'=> $request['name'],
+                'notlp'=>$request['no_tlp'],
+                'level'=>$request['level'],
+                'status'=>$request['status'],
+                'image'=>$request['image'],
+                'email'=>$request['email'],
+                'password'=>$request['password'],
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            ];
+
+
+            DB::table('penguna_has_kasir')->insert($datasave);
+            DB::table('kasir')->insert($inputan); 
+
+            return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
+
+
+            }
+           
+
+            // managefr
+            
+          
+            // return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
   
     }
 
@@ -121,7 +183,14 @@ class PenggunaController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $pengguna = DB::table('penguna')->where('id_penguna', $id)->get();
+
+        // return view('admin/edit', ['pengguna' => $pengguna]);
+
+        // mengambil data pegawai berdasarkan id yang dipilih
+	$pengguna = DB::table('penguna')->where('id_penguna',$id)->get();
+	// passing data pegawai yang didapat ke view edit.blade.php
+	return view('admin.edit',['pengguna' => $pengguna]);
     }
 
     /**
@@ -133,7 +202,19 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::table('penguna')->where('id_penguna', $request->id)->update([
+            'name'=> $request['name'],
+            'no_tlp'=>$request['no_tlp'],
+            'level'=>$request['level'],
+            'status'=>$request['status'],
+            'image'=>$request['image'],
+            'email'=>$request['email'],
+            'password'=>$request['password'],
+          ]);
+    
+        //   dd($request);
+        
+            return redirect('admin/dashboard');
     }
 
     /**

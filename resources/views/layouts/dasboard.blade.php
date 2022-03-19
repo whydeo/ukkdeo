@@ -35,19 +35,21 @@
             <hr>
             <div class="list-group list-group-flush">
                 @if(auth()->user()->level=="admin")
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>  
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('index.index') }}">pegawai</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('pengguna.index') }}">pegawai</a>
                 {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('logaktifitas.index ')}}">log aktifitas pegawai</a> --}}
-                     @elseif(auth()->user()->level=="manager")
+                @elseif(auth()->user()->level=="manager")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">manager</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">log aktifitas manager</a>
-                  
-                   @elseif(auth()->user()->level=="kasir")
-                   <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
-                   <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">kasir</a>
-                   <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">log aktifitas kasir</a>   
-                   @endif
+
+                @elseif(auth()->user()->level=="kasir")
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">kasir</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">log aktifitas kasir</a>
+                @endif
+                {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('coba.index') }}">Coba</a> --}}
             </div>
         </div>
         <!-- Page content wrapper-->

@@ -20,7 +20,7 @@ class CreatePengunaTable extends Migration
             $table->string('level');
             $table->string('status');
             $table->string('image');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->timestamps();
         });
