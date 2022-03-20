@@ -15,12 +15,12 @@ class CreateKasirTable extends Migration
     {
         Schema::create('kasir', function (Blueprint $table) {
             $table->id('id_kasir');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('notlp');
              $table->string('status');
             $table->string('image');
             $table->string('level');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->timestamps();
         });

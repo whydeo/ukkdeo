@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Penggunacontroller;
+use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CobaController;
 
 /*
@@ -26,6 +28,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('coba', 'CobaController')->middleware('ceklevel:admin');
 Route::resource('pengguna', 'PenggunaController')->middleware('ceklevel:admin');
+Route::resource('Manager', 'ManagerController')->middleware('ceklevel:manager');
+Route::resource('Menu', 'MenuController')->middleware('ceklevel:manager');
 
 // Route::get('pengguna/{id}/edit', 'PenggunaController@edit')->name('edit');
 // Route::post('pengguna/{id}/update', 'PenggunaController@update')->name('update');

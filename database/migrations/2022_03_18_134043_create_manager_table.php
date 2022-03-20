@@ -15,12 +15,12 @@ class CreateManagerTable extends Migration
     {
         Schema::create('manager', function (Blueprint $table) {
             $table->id('id_manager');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('notlp');
              $table->string('status');
             $table->string('image');
             $table->string('level');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->timestamps();
         });

@@ -1,7 +1,4 @@
-{{-- @dd($peng); --}}
-
 @extends('layouts.dasboard')
-
 @section('content')
 <div class="container ml-2 mt-4">
     <div class="row">
@@ -14,13 +11,11 @@
             </div>
         </div>
     </div>
-
     @if ($message = Session::get('success'))
     <div class="alert alert-success">
         <p>{{ $message }}</p>
     </div>
     @endif
-
     <table class="table table-bordered">
         <tr>
             <th>Nama</th>
