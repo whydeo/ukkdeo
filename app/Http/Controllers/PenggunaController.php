@@ -181,13 +181,23 @@ class PenggunaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($pengguna)
+    public function edit( $pengguna)
     {
 // dd($pengguna);
-        $pengguna= DB::table('penguna')->where('id_penguna', $pengguna)->get();
-
-        return view('admin/edit', ['pengguna'=>$pengguna]);
-
+    $pengguna = DB::table('penguna')
+    ->join('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
+    ->join('users', 'penguna_has_user.id_user', '=', 'users.id')
+    ->join('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
+    ->join('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
+    ->join('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
+    ->join('kasir', 'penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
+    ->join('model_has_roles', 'penguna.id_penguna', '=', 'model_has_roles.model_id')
+    ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+    // ->where('model_has_roles.model_id', $pengguna)
+    ->select('users.*', 'manager.*','kasir.*','penguna.*', 'model_has_roles.model_id')
+    ->get();
+     dd($pengguna);
+    return view('admin/edit', compact('pengguna'));
 
     }
 
@@ -202,14 +212,6 @@ class PenggunaController extends Controller
             'email'=>'required',
             'password' => ['required', 'string', 'min:4', 'confirmed'],
         ]);
-
-
-
-        $nama_kasir= DB::table('kasir')->where('id_kasir', $id)->value('name');
-        $nama_manager= DB::table('manager')->where('id_manager',$id)->value('name');
-        // $nama_admin=DB::table('admin')->where('id_admin',$id)->value('name');
-
-
         DB::table('penguna')->where('id_penguna', $id )->update([
             'name' => $request->name,
             'no_tlp' => $request->no_tlp,
@@ -220,25 +222,16 @@ class PenggunaController extends Controller
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s")
         ]);
+        DB::table('users')->where('name',$id)->update([
+            'name'=>$request->name,
+            'password'=>$request->password,
+            'email' => $request->email,
+            'level'=>$request->level,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s")
+        ]);
 
-
-        if ($request['level'] == 'level') {
-
-            DB::table('user')->where('id',$id)->update([
-                'name'=>$request->name,
-                'password'=>$request->password,
-                'email' => $request->email,
-                'level'=>$request->level,
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
-            ]);
-
-        } elseif ($request['level']=='manager') {
-
-            $level = DB::table('manager')->where('id_manager', $id)->value('name');
-
-
-            if($level == $request->name){
+        if ($request['level']=='manager') {
                 DB::table('manager')->where('id_manager',$id)->update([
                     'name' => $request->name,
                     'notlp' => $request->no_tlp,
@@ -249,23 +242,6 @@ class PenggunaController extends Controller
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
                 ]);
-            } else {
-                // dd($id);
-                DB::table('manager')->where('id_manager', $id)->delete();
-
-                DB::table('kasir')->insert([
-                    'name' => $request->name,
-                    'notlp' => $request->no_tlp,
-                    'level' => $request->level,
-                    'status' => $request->status,
-                    'email' => $request->email,
-                    'image' => $request->email,
-                    'password' => $request->password,
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s")
-                ]);
-            }
-
 
         }
         elseif ($request['level']=='kasir') {

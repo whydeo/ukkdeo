@@ -24,10 +24,10 @@
     </div>
     @endif
 
-    <form action="{{ route('pengguna.update', $pengguna[0]->id_penguna) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('pengguna.update', $pengguna[0]->model_id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-
+        <input type="hidden" name="model_id" value="{{ $pengguna[0]->model_id }}">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
@@ -44,7 +44,7 @@
               <strong for="">level</strong>
             <div class="input-group mb-3">
                 <select class="form-control" name="level" id="level">
-                    <option value="{{ $pengguna[0]->level}}">{{ $pengguna[0]->level}}</option>
+                    <option value="{{ $pengguna->level}}">{{ $pengguna[0]->level}}</option>
                     <option value="manager">manager</option>
                     ☻<option value="kasir">kasir</option>
                 </select>
@@ -53,26 +53,26 @@
         <strong for="">status</strong>
       <div class="input-group mb-3">
           <select class="form-control" name="status" id="status">
-              <option value="{{ $pengguna[0]->status}}">{{ $pengguna[0]->status}}</option>
+              <option value="{{ $pengguna->status}}">{{ $pengguna[0]->status}}</option>
               <option value="aktif">aktif</option>
               ☻<option value="nonaktif">nonaktif</option>
           </select>
       </div>
             {{--  <strong for="">level</strong>
             <div class="input-group mb-3">
-                <input type="level" class="form-control" value="{{ $pengguna[0]->level}}" name="level" placeholder="level">
+                <input type="level" class="form-control" value="{{ $pengguna->level}}" name="level" placeholder="level">
             </div>
             <strong for="">status</strong>
             <div class="input-group mb-3">
-                <input type="status" class="form-control" value="{{ $pengguna[0]->status}}" name="status" placeholder="status">
+                <input type="status" class="form-control" value="{{ $pengguna->status}}" name="status" placeholder="status">
             </div>  --}}
             <strong for="">email</strong>
             <div class="input-group mb-3">
-                <input type="email" class="form-control" value="{{ $pengguna[0]->email}}" name="email" placeholder="email">
+                <input type="email" class="form-control" value="{{ $pengguna->email}}" name="email" placeholder="email">
             </div>
             <strong for="">password </strong>
             <div class="input-group mb-3">
-                <input id="password" type="text" class="form-control " name="password" placeholder="password" value="{{ $pengguna[0]->password}}">
+                <input id="password" type="text" class="form-control " name="password" placeholder="password" value="{{ $pengguna->password}}">
             </div>
             <div class="row mb-3">
                 <strong>comfirm password</strong>
