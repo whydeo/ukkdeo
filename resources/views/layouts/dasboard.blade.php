@@ -40,8 +40,8 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#">log aktifitas pegawai</a> --}}
                 @elseif(auth()->user()->level=="manager")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('manager.index')}}">manager</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">log aktifitas manager</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('index')}}">manager</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu')}}">menu</a>
                 @elseif(auth()->user()->level=="kasir")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">kasir</a>

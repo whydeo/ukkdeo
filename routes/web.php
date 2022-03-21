@@ -28,8 +28,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('coba', 'CobaController')->middleware('ceklevel:admin');
 Route::resource('pengguna', 'PenggunaController')->middleware('ceklevel:admin');
-Route::resource('Manager', 'ManagerController')->middleware('ceklevel:manager');
-Route::resource('Menu', 'MenuController')->middleware('ceklevel:manager');
+// Route::resource('Manager', 'ManagerController')->middleware('ceklevel:manager');
+// Route::resource('Menu', 'MenuController')->middleware('ceklevel:manager');
+// Route::resource('Menu', 'MenuController')->middleware('ceklevel:manager');
+Route::get('manager/index', [App\Http\Controllers\ManagerController::class, 'index'])->name('index')->middleware('ceklevel:manager');
+Route::get('menu/index', [App\Http\Controllers\MenuController::class, 'index'])->name('menu')->middleware('ceklevel:manager');
 
 // Route::get('pengguna/{id}/edit', 'PenggunaController@edit')->name('edit');
 // Route::post('pengguna/{id}/update', 'PenggunaController@update')->name('update');

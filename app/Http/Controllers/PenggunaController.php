@@ -30,9 +30,9 @@ class PenggunaController extends Controller
         ->select('users.*', 'manager.*','penguna.*','kasir.*')
         ->get();
 
-        $pengguna = DB::table('penguna')->get();
+        // $pengguna = DB::table('penguna')->get();
 
-    return view('admin/index',['peng' => $pengguna]);
+    return view('admin/index',['peng' => $peng]);
     }
 
 
@@ -126,8 +126,19 @@ class PenggunaController extends Controller
 
                 $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
 
-                $id_kasir = DB::table('kasir')->where('level', $request['level'])->value('id_kasir');
 
+                $inputan = [
+                    'name'=> $request['name'],
+                    'notlp'=>$request['no_tlp'],
+                    'level'=>$request['level'],
+                    'status'=>$request['status'],
+                    'image'=>$request['image'],
+                    'email'=>$request['email'],
+                    'password'=>$request['password'],
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ];
+                $id_kasir = DB::table('kasir')->where('level', $request['level'])->value('id_kasir');
 
                $datasave = [
                 'id_penguna'=>$id_penguna,
@@ -135,21 +146,9 @@ class PenggunaController extends Controller
             ];
 
 
-            $inputan = [
-                'name'=> $request['name'],
-                'notlp'=>$request['no_tlp'],
-                'level'=>$request['level'],
-                'status'=>$request['status'],
-                'image'=>$request['image'],
-                'email'=>$request['email'],
-                'password'=>$request['password'],
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
-            ];
 
 
             DB::table('penguna_has_kasir')->insert($datasave);
-            DB::table('kasir')->insert($inputan);
 
             return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
 
@@ -181,20 +180,29 @@ class PenggunaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit( $pengguna)
+    public function edit( $pe)
     {
-// dd($pengguna);
+    // $ppk = DB::table('penguna')
+    // ->join('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
+    // // ->join('users', 'penguna_has_user.id_user', '=', 'users.id')
+    // // ->join('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
+    // // ->join('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
+    // // ->join('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
+    // // ->join('kasir', 'penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
+    // // ->join('model_has_roles', 'penguna.id_penguna', '=', 'model_has_roles.model_id')
+    // // ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+    // ->select('penguna.*', 'penguna_has_user.*')
+    // ->where('penguna.id_penguna', $pengguna)
+    // ->get();
     $pengguna = DB::table('penguna')
-    ->join('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
-    ->join('users', 'penguna_has_user.id_user', '=', 'users.id')
-    ->join('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
-    ->join('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
-    ->join('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
-    ->join('kasir', 'penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
-    ->join('model_has_roles', 'penguna.id_penguna', '=', 'model_has_roles.model_id')
+    ->join('users', 'penguna.id_penguna', '=', 'users.id')
+    ->join('kasir','penguna.id_penguna','=','kasir.id_kasir')
+    ->join('manager','penguna.id_penguna','=','manager.id_manager')
+    ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
     ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-    // ->where('model_has_roles.model_id', $pengguna)
-    ->select('users.*', 'manager.*','kasir.*','penguna.*', 'model_has_roles.model_id')
+    ->where('penguna.id_penguna', $pe)
+    ->select('penguna.*', 'users.*','kasir.*','manager.*','model_has_roles.model_id')
+
     ->get();
      dd($pengguna);
     return view('admin/edit', compact('pengguna'));
