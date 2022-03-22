@@ -36,7 +36,7 @@ Route::get('menu/index', [App\Http\Controllers\MenuController::class, 'index'])-
 Route::get('menu/create', [App\Http\Controllers\MenuController::class, 'create'])->name('create')->middleware('ceklevel:manager');
 Route::POST('menu/store', [App\Http\Controllers\MenuController::class, 'store'])->name('store')->middleware('ceklevel:manager');
 Route::get('menu/{id}/edit', [App\Http\Controllers\MenuController::class, 'edit'])->name('edit')->middleware('ceklevel:manager');
-Route::get('menu/{id}/update', [App\Http\Controllers\MenuController::class, 'update'])->name('update')->middleware('ceklevel:manager');
+Route::put('menu/{id}/update', [App\Http\Controllers\MenuController::class, 'update'])->name('update')->middleware('ceklevel:manager');
 
 // Route::get('pengguna/{id}/edit', 'PenggunaController@edit')->name('edit');
 // Route::post('pengguna/{id}/update', 'PenggunaController@update')->name('update');

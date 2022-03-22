@@ -30,9 +30,9 @@ class PenggunaController extends Controller
         ->select('users.*', 'manager.*','penguna.*','kasir.*')
         ->get();
 
-        // $pengguna = DB::table('penguna')->get();
+         $pengguna = DB::table('penguna')->get();
 
-    return view('admin/index',['peng' => $peng]);
+    return view('admin/index',['peng' => $pengguna]);
     }
 
 
@@ -195,16 +195,15 @@ class PenggunaController extends Controller
     // ->where('penguna.id_penguna', $pengguna)
     // ->get();
     $pengguna = DB::table('penguna')
-    ->join('users', 'penguna.id_penguna', '=', 'users.id')
+    ->join('users', 'penguna.id_penguna','=', 'users.id')
     ->join('kasir','penguna.id_penguna','=','kasir.id_kasir')
     ->join('manager','penguna.id_penguna','=','manager.id_manager')
     ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
     ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-    ->where('penguna.id_penguna', $pe)
-    ->select('penguna.*', 'users.*','kasir.*','manager.*','model_has_roles.model_id')
-
+    ->select('penguna.*', 'users.*','kasir.*','manager.*')
     ->get();
-     dd($pengguna);
+    //  dd($pengguna);
+ 
     return view('admin/edit', compact('pengguna'));
 
     }

@@ -33,11 +33,8 @@
             <td>{{ $menus->image }}</td>
             <td>
                 {{-- <form action="{{ route('penguna.destroy', $p->id_penguna) }}" method="POST"> --}}
-                <a href="{{ route('menu/edit',$menus->id_menu) }}" class="btn btn-primary">Edit</a>
-
+                <a href="{{ route('edit',$menus->id_menu) }}" class="btn btn-primary">Edit</a>
                 @csrf
-
-
                 </form>
             </td>
 
