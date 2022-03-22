@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\transaksi;
+use App\Models\user;
+use DB;
+use Intervention\Image\Facades\Image;
 
 use Illuminate\Http\Request;
 
@@ -15,14 +19,12 @@ class MenuController extends Controller
 
     {
         $menu = DB::table('menu')
-        ->join('menu_has_transaksi', 'menu.id_menu', '=', 'menu_has_transaksi.id_menu')
-        ->join('transaksi', 'menu_has_transaksi.id_transaksi', '=', 'transaksi.id_transaksi')
         ->join('menu_has_user', 'menu.id_menu', '=', 'menu_has_user.id_menu')
         ->join('users','menu_has_user.id_user', '=', 'users.id')
-        ->select('users.*', 'manager.*','penguna.*','kasir.*')
+        ->select('users.name','menu.*')
         ->get();
 
-        return view('menu/index',['peng' => $menu]);
+        return view('menu/index',['menu' => $menu]);
     }
 
     /**
@@ -32,7 +34,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('menu.create');
     }
 
     /**
@@ -46,8 +48,6 @@ class MenuController extends Controller
           // dd($request);
           $request->validate([
             'nama'=>'required',
-            'makanan'=>'required',
-            'minuman'=>'required',
             'kategori'=>'required',
             'harga'=>'required',
             'image'=>'required',
@@ -58,18 +58,39 @@ class MenuController extends Controller
         $thumbImage = image::make($image->getRealPath())->resize(85, 85);
         $thumbPath = public_path() . '/imagemenu/' . $nameImage;
         $thumbImage = Image::make($thumbImage)->save($thumbPath);
+        // dd($request,$image);
+        return menu::create([
+            'nama'=> $request['nama'],
+            'kategori'=>$request['kategori'],
+            'harga'=>$request['harga'],
+           'image'=>$request['image'],
+            'created_at' => date("Y-m-d H:i:s"),
+           'updated_at' => date("Y-m-d H:i:s")
+        ]);
 
-        $id_manager = DB::table('manager')->where('name', $request['name'])->value('id_manager');
 
-        $id_menu = DB::table('menu')->where('nama',$request['nama'])->value('id_menu');
-        $datasave = [
-            'id_manager'=>$id_manager,
-            'id_menu'=>$id_menu,
-        ];
+        // dd($request);
+//         $inputan = [
+//             'nama'=> $request['nama'],
+//             'kategori'=>$request['kategori'],
+//             'harga'=>$request['harga'],
+//            'image'=>$request['image'],
+//             'created_at' => date("Y-m-d H:i:s"),
+//            'updated_at' => date("Y-m-d H:i:s")
+// ];
 
-        DB::table('menu_has_manager')->insert($datasave);
+//         $inputan= DB::table('menu')->insert();
 
-    return redirect()->route('menu.index')->with('success','Data Berhasil di Input');
+        // $id_users = DB::table('users')->where('name', $request['name'])->value('id');
+        // $id_menu = DB::table('menu')->where('nama',$request['nama'])->value('id_menu');
+        // $datasave = [
+        //     'id'=>$id_users,
+        //     'id_menu'=>$id_menu,
+        // ];
+
+        // DB::table('menu_has_user')->insert($datasave);
+
+    return redirect()->route('menu')->with('success','Data Berhasil di Input');
     }
 
     /**

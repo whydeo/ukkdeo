@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenuHasTransaksiTable extends Migration
+class CreateMenuHasUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateMenuHasTransaksiTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu_has_transaksi', function (Blueprint $table) {
-            $table->id('id_menu');
-            $table->string('id_transaksi');
-            $table->timestamps();
+        Schema::create('menu_has_user', function (Blueprint $table) {
+            $table->integer('id_menu');
+            $table->integer('id_user');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateMenuHasTransaksiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_has_transaksi');
+        Schema::dropIfExists('menu_has_user');
     }
 }
