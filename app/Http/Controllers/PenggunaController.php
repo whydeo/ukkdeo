@@ -29,7 +29,7 @@ class PenggunaController extends Controller
         ->join('kasir', 'penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
         ->select('users.*', 'manager.*','penguna.*','kasir.*')
         ->get();
-
+        //fbasdjkbfaksjhdbfkjh
         // $pengguna = DB::table('penguna')->get();
 
     return view('admin/index',['peng' => $peng]);
