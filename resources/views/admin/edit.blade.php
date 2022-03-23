@@ -24,27 +24,31 @@
     </div>
     @endif
 
-    <form action="{{ route('pengguna.update', $pengguna[0]->id_penguna) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('pengguna.update', $peng[0]->model_id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <input type="hidden" name="id_penguna" value="{{ $pengguna[0]->id_penguna }}">
+        <input type="hidden" name="id_penguna" value="{{ $peng[0]->model_id }}">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Nama :</strong>
-                    <input type="text" name="name" class="form-control" placeholder="cth.deoo" value="{{ $pengguna[0]->name}}">
+                          <strong>Nama :</strong>
+                    <input type="text" name="name" class="form-control" placeholder="cth.deoo" value="{{ $peng[0]->name}}">
+                </div>
+            </div>
+                    {{--  <strong>Nama :</strong>
+                    <input type="text" name="name" class="form-control" placeholder="cth.deoo" value="{{ $peng[0]->name}}">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>nomor telepon :</strong>
-                    <input type="text" name="no_tlp" class="form-control" placeholder="cth. Televisi 4inch"value="{{ $pengguna[0]->no_tlp}}" >
+                    <input type="text" name="no_tlp" class="form-control" placeholder="cth. Televisi 4inch"value="{{ $peng[0]->no_tlp}}" >
                 </div>
-            </div>
+            </div>  --}}
               <strong for="">level</strong>
             <div class="input-group mb-3">
                 <select class="form-control" name="level" id="level">
-                    <option value="{{ $pengguna[0]->level}}">{{ $pengguna[0]->level}}</option>
+                    <option value="{{ $peng[0]->level}}">{{ $peng[0]->level}}</option>
 
                 </select>
             </div>
@@ -52,33 +56,33 @@
         <strong for="">status</strong>
       <div class="input-group mb-3">
           <select class="form-control" name="status" id="status">
-              <option value="{{ $pengguna[0]->status}}">{{ $pengguna[0]->status}}</option>
+              <option value="{{ $peng[0]->status}}">{{ $peng[0]->status}}</option>
               <option value="aktif">aktif</option>
-              ☻<option value="nonaktif">nonaktif</option>
+              <option value="nonaktif">nonaktif</option>
           </select>
       </div>
             {{--  <strong for="">level</strong>
             <div class="input-group mb-3">
-                <input type="level" class="form-control" value="{{ $pengguna->level}}" name="level" placeholder="level">
+                <input type="level" class="form-control" value="{{ $peng[0]evel}}" name="level" placeholder="level">
             </div>
             <strong for="">status</strong>
             <div class="input-group mb-3">
-                <input type="status" class="form-control" value="{{ $pengguna->status}}" name="status" placeholder="status">
+                <input type="status" class="form-control" value="{{ $peng[0]tatus}}" name="status" placeholder="status">
             </div>  --}}
-            <strong for="">email</strong>
+            {{--  <strong for="">email</strong>
             <div class="input-group mb-3">
-                <input type="email" class="form-control" value="{{ $pengguna[0]->email}}" name="email" placeholder="email">
+                <input type="email" class="form-control" value="{{ $peng[0]->email}}" name="email" placeholder="email">
             </div>
             <strong for="">password </strong>
             <div class="input-group mb-3">
-                <input id="password" type="text" class="form-control " name="password" placeholder="password" value="{{ $pengguna[0]->password}}">
+                <input id="password" type="text" class="form-control " name="password" placeholder="password" value="{{ $peng[0]->password}}">
             </div>
             <div class="row mb-3">
                 <strong>comfirm password</strong>
                 <div class="input-group mb-3">
                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                 </div>
-            </div>
+            </div>  --}}
 
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Simpan</button>

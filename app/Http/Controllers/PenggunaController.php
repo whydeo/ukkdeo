@@ -21,18 +21,16 @@ class PenggunaController extends Controller
     public function index()
     {
         $peng = DB::table('penguna')
-        ->join('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
-        ->join('users', 'penguna_has_user.id_user', '=', 'users.id')
-        ->join('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
-        ->join('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
-        ->join('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
-        ->join('kasir', 'penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
-        ->select('users.*', 'manager.*','penguna.*','kasir.*')
+        ->leftjoin('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
+        ->leftjoin('users','penguna_has_user.id_user', '=', 'users.id')
+        ->leftjoin('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
+        ->leftjoin('kasir','penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
+        ->leftjoin('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
+        ->leftjoin('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
+        ->select('users.id','kasir.id_kasir','penguna.*','manager.id_manager')
         ->get();
-
-         $pengguna = DB::table('penguna')->get();
-
-    return view('admin/index',['peng' => $pengguna]);
+        //   dd($peng);
+    return view('admin/index',['peng' => $peng]);
     }
 
 
@@ -126,7 +124,6 @@ class PenggunaController extends Controller
 
                 $id_penguna = DB::table('penguna')->where('name',$request['name'])->value('id_penguna');
 
-
                 $inputan = [
                     'name'=> $request['name'],
                     'notlp'=>$request['no_tlp'],
@@ -138,6 +135,8 @@ class PenggunaController extends Controller
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
                 ];
+                DB::table('kasir')->insert($inputan);
+
                 $id_kasir = DB::table('kasir')->where('level', $request['level'])->value('id_kasir');
 
                $datasave = [
@@ -182,99 +181,70 @@ class PenggunaController extends Controller
      */
     public function edit( $pe)
     {
-    // $ppk = DB::table('penguna')
-    // ->join('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
-    // // ->join('users', 'penguna_has_user.id_user', '=', 'users.id')
-    // // ->join('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
-    // // ->join('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
-    // // ->join('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
-    // // ->join('kasir', 'penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
-    // // ->join('model_has_roles', 'penguna.id_penguna', '=', 'model_has_roles.model_id')
-    // // ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-    // ->select('penguna.*', 'penguna_has_user.*')
-    // ->where('penguna.id_penguna', $pengguna)
-    // ->get();
-    $pengguna = DB::table('penguna')
-    ->join('users', 'penguna.id_penguna','=', 'users.id')
-    ->join('kasir','penguna.id_penguna','=','kasir.id_kasir')
-    ->join('manager','penguna.id_penguna','=','manager.id_manager')
-    ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-    ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-    ->select('penguna.*', 'users.*','kasir.*','manager.*')
-    ->get();
-    //  dd($pengguna);
- 
-    return view('admin/edit', compact('pengguna'));
+        $peng = DB::table('penguna')
+        ->leftjoin('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
+        ->leftjoin('users','penguna_has_user.id_user', '=', 'users.id')
+        ->leftjoin('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
+        ->leftjoin('kasir','penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
+        ->leftjoin('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
+        ->leftjoin('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
+        ->leftjoin('model_has_roles', 'penguna.id_penguna', '=', 'model_has_roles.model_id')
+        ->leftjoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->where('model_has_roles.model_id', $pe)
+        ->select('penguna.level','penguna.status','penguna.name','model_has_roles.model_id')
+        ->get();
+    //   dd($peng);
+        return view('admin/edit',['peng' => $peng]);
+
 
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id )
     {
-        $request->validate([
-            'name'=>'required',
-            'no_tlp'=>'required',
-            'level'=>'required',
-            'status'=>'required',
-            'email'=>'required',
-            'password' => ['required', 'string', 'min:4', 'confirmed'],
+      
+        
+     
+$request->validate([
+        'status'=>'required',
+        'level'=>'required',
         ]);
-        DB::table('penguna')->where('id_penguna', $id )->update([
-            'name' => $request->name,
-            'no_tlp' => $request->no_tlp,
-            'level' => $request->level,
-            'status' => $request->status,
-            'email' => $request->email,
-            'password' => $request->password,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s")
-        ]);
-        DB::table('users')->where('name',$id)->update([
-            'name'=>$request->name,
-            'password'=>$request->password,
-            'email' => $request->email,
-            'level'=>$request->level,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s")
-        ]);
+       
+        // dd($request->status);
+         DB::table('penguna')->where('id_penguna',$id)->update(['status' => $request->status]);
 
-        if ($request['level']=='manager') {
-                DB::table('manager')->where('id_manager',$id)->update([
-                    'name' => $request->name,
-                    'notlp' => $request->no_tlp,
-                    'level' => $request->level,
-                    'status' => $request->status,
-                    'email' => $request->email,
-                    'password' => $request->password,
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s")
-                ]);
+         $deo = DB::table('penguna')->where('id_penguna',$id)->get();
+         
+        // dd($deo);
+        
+        if ($deo  == 'manager') {
+            DB::table('manager')->where('id_manager',$id)->update(['status' => $deo->status]);
+            dd($deo);
+        } elseif ($deo == 'kasir'){
+            DB::table('kasir')->where('id_kasir',$id)->update(['status' => $deo->status]);
 
         }
-        elseif ($request['level']=='kasir') {
-            DB::table('kasir')->where('id_kasir',$id)->update([
-                    'name'=> $request['name'],
-                    'notlp'=>$request['no_tlp'],
-                    'level'=>$request['level'],
-                    'status'=>$request['status'],
-                    'email'=>$request['email'],
-                    'password'=>$request['password'],
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s")
-            ]);
+      
+        
+        
+        // DB::table('kasir')->where('id_kasir',$id)->update([
+        //     'status' => $request->status,
+
+        // ]);
+        // DB::table('manager')->where('id_manager',$id)->update([
+        //     'status' => $request->status,
+
+        // ]);
 
 
-        }
+        return redirect()->route('pengguna.index')->with('success','Data Berhasil di update');
 
-
-
- return redirect()->route('pengguna.index')->with('success', "Data pengguna berhasil di update");
-        // return redirect('admin/index');
     }
+
 
 
     public function destroy($id)
     {
         //
     }
-}
+    }
