@@ -18,7 +18,6 @@ class CreateManagerTable extends Migration
             $table->string('name')->unique();
             $table->string('notlp');
              $table->string('status');
-            $table->string('image');
             $table->string('level');
             $table->string('email');
             $table->string('password');

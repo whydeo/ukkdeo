@@ -23,12 +23,12 @@ class UserSeeder extends Seeder
 
          $admin->assignRole('admin');
 
-        // $manager = User::create([
-        //     'name' => 'Manager',
-        //     'email' => 'manager@role.test',
-        //     'level'=> 'manager',
-        //     'password' => bcrypt('1234')
-        // ]);
+        $manager = User::create([
+            'name' => 'Manager',
+            'email' => 'manager@role.test',
+            'level'=> 'manager',
+            'password' => bcrypt('1234')
+        ]);
 
         // $manager->assignRole('manager');
 

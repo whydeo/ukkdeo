@@ -18,7 +18,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/dash.js') }}" defer></script>
-
+    {{-- livewire --}}
+    @livewireStyles
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -44,13 +45,29 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu')}}">menu</a>
                 @elseif(auth()->user()->level=="kasir")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">kasir</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">kasir</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">log aktifitas kasir</a>
                 @endif
                 {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('coba.index') }}">Coba</a> --}}
             </div>
         </div>
+        {{-- buat card --}}
+        <style>
+                 .container {
+                padding: 2rem 0rem;
+                }
+
+                h4 {
+                margin: 2rem 0rem 1rem;
+                }
+
+                .table-image {
+                td, th {
+                    vertical-align: middle;
+                }
+                }
+        </style>
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
             <!-- Top navigation-->
@@ -98,6 +115,7 @@
             <!-- Page content-->
             <div class="container-fluid">
                 @yield('content')
+       {{isset($slot)? $slot :null}}
             </div>
         </div>
     </div>
@@ -105,5 +123,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+    @livewireScripts
 </body>
 </html>

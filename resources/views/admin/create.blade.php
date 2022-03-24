@@ -70,10 +70,10 @@
                 </div>
             </div>
 
-            <label for="">image</label>
+            {{-- <label for="">image</label>
             <div class="input-group mb-3">
                 <input type="file" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="image" placeholder="no telepon">
-            </div>
+            </div> --}}
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\transaksi;
 use App\Models\user;
 use App\Models\menu;
+use App\Models\Kategori;
 use DB;
-use Intervention\Image\Facades\Image;
-
+use Illuminate\Pagination\Paginator;
+// use Intervention\Image\Facades\Image;
+use File;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -22,8 +24,10 @@ class MenuController extends Controller
         $menu = DB::table('menu')
         ->join('menu_has_user', 'menu.id_menu', '=', 'menu_has_user.id_menu')
         ->join('users','menu_has_user.id_user', '=', 'users.id')
+        // ->join('menu_has_kategori', 'menu.id_menu', '=', 'menu_has_kategori.id_menu')
+        // ->join('kategori','menu_has_kategori.id_kategori', '=', 'kategori.id_kategori')
         ->select('users.name','menu.*')
-        ->get();
+        ->paginate(1);
 
         return view('menu/index',['menu' => $menu]);
     }
@@ -36,6 +40,7 @@ class MenuController extends Controller
     public function create()
     {
         return view('menu.create');
+        
     }
 
     /**
@@ -49,22 +54,21 @@ class MenuController extends Controller
 
           $request->validate([
             'nama'=>'required',
-            'kategori'=>'required',
             'harga'=>'required',
             'image'=>'required',
         ]);
 
-        $image = $request->file('image');
-        $nameImage = $request->file('image')->getClientOriginalName();
-        $thumbImage = image::make($image->getRealPath())->resize(85, 85);
-        $thumbPath = public_path() . '/imagemenu/' . $nameImage;
-        $thumbImage = Image::make($thumbImage)->save($thumbPath);
-        // dd($request,$image);
+
+
+       
+        $file           = $request->file('image');
+        $nama_file      = $file->getClientOriginalName();
+        $file->move('imagemenu',$file->getClientOriginalName());
          menu::create([
             'nama'=> $request['nama'],
             'kategori'=>$request['kategori'],
             'harga'=>$request['harga'],
-           'image'=>$request['image'],
+           'image'=>$nama_file,
             'created_at' => date("Y-m-d H:i:s"),
            'updated_at' => date("Y-m-d H:i:s")
         ]);
@@ -102,7 +106,8 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        
+        $menu= menu::find($id);
+        return view ('menu/show', compact('menu'));
     }
 
     /**
@@ -151,6 +156,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('menu')->where('id_menu', $id)->delete();
+        return redirect()->route('menu')->with('success', "menu berhasil dihapus");
     }
 }

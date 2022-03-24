@@ -19,7 +19,6 @@ class CreatePengunaTable extends Migration
             $table->string('no_tlp');
             $table->string('level');
             $table->string('status');
-            $table->string('image');
             $table->string('email');
             $table->string('password');
             $table->timestamps();

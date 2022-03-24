@@ -5,7 +5,6 @@ use App\Http\Controllers\Penggunacontroller;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CobaController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +23,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::get('kasir',  Kasir::class)->middleware('ceklevel:kasir');
 // Route::resource('admin/index',Penggunacontroller::class)->middleware('ceklevel:admin');
 
 // Route::resource('coba', 'CobaController')->middleware('ceklevel:admin');
@@ -37,9 +38,12 @@ Route::get('menu/create', [App\Http\Controllers\MenuController::class, 'create']
 Route::POST('menu/store', [App\Http\Controllers\MenuController::class, 'store'])->name('store')->middleware('ceklevel:manager');
 Route::get('menu/{id}/edit', [App\Http\Controllers\MenuController::class, 'edit'])->name('edit')->middleware('ceklevel:manager');
 Route::put('menu/{id}/update', [App\Http\Controllers\MenuController::class, 'update'])->name('update')->middleware('ceklevel:manager');
+Route::get('menu/{id}/show', [App\Http\Controllers\MenuController::class, 'show'])->name('show')->middleware('ceklevel:manager');
+Route::get('menu/{id}/destroy', [App\Http\Controllers\MenuController::class, 'destroy'])->name('destroy')->middleware('ceklevel:manager');
 
 // Route::get('pengguna/{id}/edit', 'PenggunaController@edit')->name('edit');
 // Route::post('pengguna/{id}/update', 'PenggunaController@update')->name('update');
 // Route::get('/pengguna/{id}/edit', [App\Http\Controllers\PenggunaController::class, 'edit'])->name('admin.edit ');
 // Route::get('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'edit'])->name('admin.dashboard.edit ');
 // Route::post('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'update']);
+Route::resource('transaksi', 'TransaksiController')->middleware('ceklevel:kasir');

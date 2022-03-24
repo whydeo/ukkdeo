@@ -10,7 +10,7 @@ use App\Models\manager;
 use DB;
 use Illuminate\Support\Facades\Hash;
 
-use Intervention\Image\Facades\Image;
+// use Intervention\Image\Facades\Image;
 class PenggunaController extends Controller
 {
     /**
@@ -49,14 +49,14 @@ class PenggunaController extends Controller
             'status'=>'required',
             'email'=>'required',
             'password' => ['required', 'string', 'min:4', 'confirmed'],
-            'image'=>'required',
+            // 'image'=>'required',
         ]);
 
-        $image = $request->file('image');
-        $nameImage = $request->file('image')->getClientOriginalName();
-        $thumbImage = image::make($image->getRealPath())->resize(85, 85);
-        $thumbPath = public_path() . '/image/' . $nameImage;
-        $thumbImage = Image::make($thumbImage)->save($thumbPath);
+        // $image = $request->file('image');
+        // $nameImage = $request->file('image')->getClientOriginalName();
+        // $thumbImage = image::make($image->getRealPath())->resize(85, 85);
+        // $thumbPath = public_path() . '/image/' . $nameImage;
+        // $thumbImage = Image::make($thumbImage)->save($thumbPath);
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -71,7 +71,7 @@ class PenggunaController extends Controller
             'no_tlp'=>$request['no_tlp'],
             'level'=>$request['level'],
             'status'=>$request['status'],
-            'image'=>$request['image'],
+            // 'image'=>$request['image'],
             'email'=>$request['email'],
             'password'=>$request['password'],
 
@@ -99,7 +99,7 @@ class PenggunaController extends Controller
                     'notlp'=>$request['no_tlp'],
                     'level'=>$request['level'],
                     'status'=>$request['status'],
-                    'image'=>$request['image'],
+                    // 'image'=>$request['image'],
                     'email'=>$request['email'],
                     'password'=>$request['password'],
                     'created_at' => date("Y-m-d H:i:s"),
@@ -129,7 +129,7 @@ class PenggunaController extends Controller
                     'notlp'=>$request['no_tlp'],
                     'level'=>$request['level'],
                     'status'=>$request['status'],
-                    'image'=>$request['image'],
+                    // 'image'=>$request['image'],
                     'email'=>$request['email'],
                     'password'=>$request['password'],
                     'created_at' => date("Y-m-d H:i:s"),
