@@ -45,7 +45,8 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu')}}">menu</a>
                 @elseif(auth()->user()->level=="kasir")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">kasir</a>
+            {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('transaksi.index')}}">kasir</a> --}}
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('pesan.index')}}">pesan menu</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">log aktifitas kasir</a>
                 @endif
                 {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>

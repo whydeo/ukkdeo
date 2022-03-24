@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class TransaksiController extends Controller
+use App\Models\menu;
+use App\Models\pemesan;
+use App\Models\pesan;
+use App\Models\user;
+use DB;
+class PesanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,15 +17,16 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-    //     $trans= DB::table('transaksi')
-    //     ->join('transaksi_has_menu', 'transaksi.id_transaksi', '=', 'transaksi_has_menu.id_transaksi')
-    //     ->join('menu','transaksi_has_menu.id_menu', '=', 'menu.id_menu')
-    //    ->join('transaksi_has_user', 'transaksi.id_transaksi', '=', 'transaksi_has_user.id_transaksi')
-    //      ->join('users','transaksi_has_user.id_user', '=', 'users.id_user')
-    //     ->select('users.name','transaksi.*')
-    //     ->pget();
+        // $pesan = DB::table('pesan')
+        // ->join('pesan_has_pemesan', 'pesan.id_pesan', '=', 'pesan_has_user.id_pesan')
+        // ->join('pemesan','pesan_has_pemesan.id_pesan', '=', 'pemesan.id_pemesan')
+        // ->join('pesan_has_menu', 'pesan.id_pesan', '=', 'pesan_has_menu.id_pesan')
+        // ->join('menu','pesan_has_menu.id_menu', '=', 'menu.id_menu')
+        // ->select('pemesan.nama','pesan.*')
+        // ->paginate(1);
 
-        return view('kasir.index');
+        return view('pesan.index');
+
     }
 
     /**
@@ -31,7 +36,9 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        //
+        $pesan = DB::table('menu')->get();
+        // dd($pesan);
+        return view('pesan/create',['pesan' => $pesan]);
     }
 
     /**

@@ -46,4 +46,5 @@ Route::get('menu/{id}/destroy', [App\Http\Controllers\MenuController::class, 'de
 // Route::get('/pengguna/{id}/edit', [App\Http\Controllers\PenggunaController::class, 'edit'])->name('admin.edit ');
 // Route::get('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'edit'])->name('admin.dashboard.edit ');
 // Route::post('/admin/dashboard/edit/{id}', [App\Http\Controllers\KamarController::class, 'update']);
-Route::resource('transaksi', 'TransaksiController')->middleware('ceklevel:kasir');
+// Route::resource('transaksi', 'TransaksiController')->middleware('ceklevel:kasir');
+Route::resource('pesan', 'PesanController')->middleware('ceklevel:kasir');

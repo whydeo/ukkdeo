@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TransaksiController extends Controller
+class KasirController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,15 +13,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-    //     $trans= DB::table('transaksi')
-    //     ->join('transaksi_has_menu', 'transaksi.id_transaksi', '=', 'transaksi_has_menu.id_transaksi')
-    //     ->join('menu','transaksi_has_menu.id_menu', '=', 'menu.id_menu')
-    //    ->join('transaksi_has_user', 'transaksi.id_transaksi', '=', 'transaksi_has_user.id_transaksi')
-    //      ->join('users','transaksi_has_user.id_user', '=', 'users.id_user')
-    //     ->select('users.name','transaksi.*')
-    //     ->pget();
-
-        return view('kasir.index');
+        //
     }
 
     /**

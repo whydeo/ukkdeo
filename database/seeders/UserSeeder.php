@@ -30,16 +30,16 @@ class UserSeeder extends Seeder
             'password' => bcrypt('1234')
         ]);
 
-        // $manager->assignRole('manager');
+        $manager->assignRole('manager');
 
-        // $kasir = User::create([
-        //             'name' => 'kasir',
-        //             'email' => 'kasir@role.test',
-        //             'level'=> 'kasir',
-        //             'password' => bcrypt('1234')
-        //         ]);
+        $kasir = User::create([
+                    'name' => 'kasir',
+                    'email' => 'kasir@role.test',
+                    'level'=> 'kasir',
+                    'password' => bcrypt('1234')
+                ]);
 
-        // $kasir->assignRole('kasir');
+        $kasir->assignRole('kasir');
 
     }
 }
