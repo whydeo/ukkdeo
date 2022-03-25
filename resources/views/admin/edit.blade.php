@@ -1,5 +1,4 @@
 @extends('layouts.dasboard')
-
 @section('content')
 <div class="container ml-2 mt-4">
     <div class="row">

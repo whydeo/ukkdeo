@@ -19,7 +19,6 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/dash.js') }}" defer></script>
     {{-- livewire --}}
-    @livewireStyles
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -116,7 +115,6 @@
             <!-- Page content-->
             <div class="container-fluid">
                 @yield('content')
-       {{isset($slot)? $slot :null}}
             </div>
         </div>
     </div>

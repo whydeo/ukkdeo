@@ -7,21 +7,21 @@
           create
           <form action="{{ route("pesan.store") }}" method="POST">
             @csrf
-        
+
             {{-- ... customer name and email fields --}}
-        
+
             <div class="card">
                 <div class="card-header">
                     menu
                 </div>
-        
+
                 <div class="card-body">
                     <table class="table" id="products_table">
                         <thead>
                             <tr>
                                 <th>Product</th>
                                 <th>jumbklah</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +43,7 @@
                             <tr id="product1"></tr>
                         </tbody>
                     </table>
-        
+
                     <div class="row">
                         <div class="col-md-12">
                             <button id="add_row" class="btn btn-default pull-left">+ Add Row</button>
