@@ -3,11 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
           create
           <form action="{{ route("pesan.store") }}" method="POST">
             @csrf
-        
+           <strong>pemesan</strong>
+            <input type="text" name="pemesan" class="form-control" />
+            <br>
+            
             {{-- ... customer name and email fields --}}
         
             <div class="card">
@@ -15,7 +18,7 @@
                     menu
                 </div>
         
-                <div class="card-body">
+                <div class="card-body ">
                     <table class="table" id="products_table">
                         <thead>
                             <tr>

@@ -40,6 +40,7 @@ class PesanController extends Controller
         // dd($pesan);
         return view('pesan/create',['pesan' => $pesan]);
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -49,7 +50,7 @@ class PesanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
