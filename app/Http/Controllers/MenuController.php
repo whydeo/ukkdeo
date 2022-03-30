@@ -1,15 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\transaksi;
-use App\Models\user;
-use App\Models\menu;
+
 use App\Models\Kategori;
-use DB;
-use Illuminate\Pagination\Paginator;
-// use Intervention\Image\Facades\Image;
-use File;
+use App\Models\Menu;
+use App\Models\Menupesan;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
+use File;
+use Image;
+
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
@@ -19,17 +22,12 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-
     {
-        $menu = DB::table('menu')
-        ->join('menu_has_user', 'menu.id_menu', '=', 'menu_has_user.id_menu')
-        ->join('users','menu_has_user.id_user', '=', 'users.id')
-        // ->join('menu_has_kategori', 'menu.id_menu', '=', 'menu_has_kategori.id_menu')
-        // ->join('kategori','menu_has_kategori.id_kategori', '=', 'kategori.id_kategori')
-        ->select('users.name','menu.*')
-        ->paginate(1);
+        return view('menu.index',[
+            'datakategori'=>Kategori::all(),
+            'datamenu'=>Menu::with('kategori')->latest()->get()
+        ]);
 
-        return view('menu/index',['menu' => $menu]);
     }
 
     /**
@@ -39,8 +37,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menu.create');
-        
+        //
     }
 
     /**
@@ -51,51 +48,33 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+     
+                'foto' => 'image|file',
+                'nama_menu' => 'required',
+                'kategori_id' => 'required',
+                'harga' => 'required',
+            ]);
+              
+            $image = $request->file('foto');
+            $nameImage = $request->file('foto')->getClientOriginalName();
+        
+            $oriPath = public_path() . '/imagemenu/' . $nameImage;
+            $oriImage = image::make($image)->save($oriPath);
+        
+                menu::create([
+                'foto'=> $nameImage,
+                'nama_menu'=>$request['nama_menu'],
+                'kategori_id'=>$request['kategori_id'],
+                'harga'=>$request['harga'],
+            ]);
+                //   dd($request);
 
-          $request->validate([
-            'nama'=>'required',
-            'harga'=>'required',
-            'image'=>'required',
-        ]);
-
-
-
+            $kat = Kategori::find($request->kategori_id);
+            $jml = $kat->jumlah + 1;
+            $kat->update(['jumlah' => $jml]);
        
-        $file           = $request->file('image');
-        $nama_file      = $file->getClientOriginalName();
-        $file->move('imagemenu',$file->getClientOriginalName());
-         menu::create([
-            'nama'=> $request['nama'],
-            'kategori'=>$request['kategori'],
-            'harga'=>$request['harga'],
-           'image'=>$nama_file,
-            'created_at' => date("Y-m-d H:i:s"),
-           'updated_at' => date("Y-m-d H:i:s")
-        ]);
-
-
-        // dd($request);
-//         $inputan = [
-//             'nama'=> $request['nama'],
-//             'kategori'=>$request['kategori'],
-//             'harga'=>$request['harga'],
-//            'image'=>$request['image'],
-//             'created_at' => date("Y-m-d H:i:s"),
-//            'updated_at' => date("Y-m-d H:i:s")
-// ];
-
-
-
-        $user =auth()->user()->id;
-        $id_menu = DB::table('menu')->where('nama',$request['nama'])->value('id_menu');
-        $datasave = [
-            'id_user'=>$user,
-            'id_menu'=>$id_menu,
-        ];
-        DB::table('menu_has_user')->insert($datasave);
-
-      
-    return redirect()->route('menu')->with('success','Data Berhasil di Input');
+            return redirect()->route('menu.index');
     }
 
     /**
@@ -106,8 +85,7 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        $menu= menu::find($id);
-        return view ('menu/show', compact('menu'));
+        //
     }
 
     /**
@@ -118,8 +96,10 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $menu= menu::find($id);
-        return view ('menu/edit', compact('menu'));
+        $menu= menu::find($id,'id');
+        $kategori= kategori::all();
+        //  dd($menu);
+        return view ('menu/edit', compact('menu','kategori'));
     }
 
     /**
@@ -132,20 +112,17 @@ class MenuController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama'=>'required',
-            'kategori'=>'required',
-            'harga'=>'required',
-            'image'=>'required',
-           
+            'nama_menu'=>'required',
+            'harga'=>'required',           
+            'kategori_id'=>'required',           
         ]);
-        DB::table('menu')->where('id_menu', $id )->update([
-            'nama'=> $request['nama'],
-            'kategori'=>$request['kategori'],
+        menu::where('id',$id)->update([
+            'nama_menu'=>$request['nama_menu'],
+            'foto'=>$request['foto'],
             'harga'=>$request['harga'],
-           'image'=>$request['image'],
-        ]);
-        return redirect()->route('menu')->with('success', "Data pengguna berhasil di update");
-
+            'kategori_id'=>$request['kategori_id'],
+           ]);
+           return redirect()->route('menu.index');
     }
 
     /**
@@ -156,7 +133,19 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('menu')->where('id_menu', $id)->delete();
-        return redirect()->route('menu')->with('success', "menu berhasil dihapus");
+        $idpemesan = Menupesan::where('menu_id',$id)->select('pesanan_id')->distinct()->get();
+        foreach($idpemesan as $pemesan){
+            Menupesan::where('pesanan_id',$pemesan->pesanan_id)->delete();
+            Pesanan::destroy($pemesan->pesanan_id);
+        }
+        $datamenu = Menu::find($id);
+        if ($datamenu->foto != "foto_menu/defaultfoto.png") {
+            Storage::delete($datamenu->foto);
+        }
+        $kat = Kategori::find($datamenu->kategori_id);
+        $jml = $kat->jumlah - 1;
+        $kat->update(['jumlah' => $jml]);
+        Menu::destroy($id);
+        return redirect('menu.index ')->with('error', 'Tambah Menu Berhasil!!..');
     }
 }

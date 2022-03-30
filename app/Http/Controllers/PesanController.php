@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\menu;
-use App\Models\pemesan;
 use App\Models\pesan;
+use App\Models\pesanan;
 use App\Models\user;
 use DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class PesanController extends Controller
 {
     /**
@@ -17,15 +19,9 @@ class PesanController extends Controller
      */
     public function index()
     {
-        // $pesan = DB::table('pesan')
-        // ->join('pesan_has_pemesan', 'pesan.id_pesan', '=', 'pesan_has_user.id_pesan')
-        // ->join('pemesan','pesan_has_pemesan.id_pesan', '=', 'pemesan.id_pemesan')
-        // ->join('pesan_has_menu', 'pesan.id_pesan', '=', 'pesan_has_menu.id_pesan')
-        // ->join('menu','pesan_has_menu.id_menu', '=', 'menu.id_menu')
-        // ->select('pemesan.nama','pesan.*')
-        // ->paginate(1);
-
-        return view('pesan.index');
+        // return view('pesan.index',[
+        //     'dtpesan' => Pesanan::with('meja','menupesan')->latest()->get(),
+        // ]);
 
     }
 
@@ -40,6 +36,7 @@ class PesanController extends Controller
         // dd($pesan);
         return view('pesan/create',['pesan' => $pesan]);
     }
+
 
     /**
      * Store a newly created resource in storage.

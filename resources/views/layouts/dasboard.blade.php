@@ -39,14 +39,16 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('pengguna.index') }}">pegawai</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#">log aktifitas pegawai</a> --}}
                 @elseif(auth()->user()->level=="manager")
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('index')}}">manager</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu')}}">menu</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('index')}}">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu.index')}}">menu</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('meja.index')}}">meja</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('kategori.index') }}">kategori</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporantrans')}}"> laporan transaksi</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('carinama')}}"> laporan berdasar nama</a>
                 @elseif(auth()->user()->level=="kasir")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
-            {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('transaksi.index')}}">kasir</a> --}}
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('pesan.index')}}">pesan menu</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">log aktifitas kasir</a>
+                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('datatrans')}}">data transaksi</a>
+                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('kasir.index')}}">pesanan</a>
                 @endif
                 {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('coba.index') }}">Coba</a> --}}
@@ -122,6 +124,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
-    @livewireScripts
 </body>
 </html>

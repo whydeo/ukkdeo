@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Kategori;
+use App\Models\Meja;
+use App\Models\Menu;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
 
 class ManagerController extends Controller
@@ -13,70 +16,70 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        return view('manager.index');
+        return view('manager.index',[
+            'data_pesan' => Pesanan::all()->count(),
+            'data_meja' => Meja::all()->count(),
+            'data_menu' => Menu::all()->count(),
+            'data_kategori'=>Kategori::all()->count()
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function laporantrans()
+    {
+        $data=pesanan::paginate(7);
+        return view ('manager.laporan', compact('data')); 
+    }
+    public function laporandapat(Request $request)
+    {
+        $from = $request->from;
+        $to = $request->to;
+        $data = pesanan::whereBetween('created_at',array($from, $to))->paginate(10);
+        return view('manager.laporandapat', compact('data'));
+    }
+    public function cari(Request $request){
+        $from = $request->from;
+        $to = $request->to;
+        $data = pesanan::whereBetween('created_at',array($from, $to))->paginate(10);
+
+        return view('manager.laporan', compact('data'));
+        
+    }
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $data = pesanan::where('nama_pegawai', 'like', "%" . $keyword . "%")->paginate(5);
+        return view('manager.transnam', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
         //

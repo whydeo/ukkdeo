@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Menu;
 class Kategori extends Model
 {
     use HasFactory;
-    public $table = 'kategori';
-    protected $primaryKey = 'id_kategori';
     protected $guarded = [];
+
+    public function menu(){
+        return $this->hasMany(Menu::class);
+    }
 }

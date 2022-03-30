@@ -1,21 +1,13 @@
-@extends('layouts.dasboard')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
           create
           <form action="{{ route("pesan.store") }}" method="POST">
             @csrf
 
-            {{-- ... customer name and email fields --}}
-
-            <div class="card">
-                <div class="card-header">
-                    menu
-                </div>
-
-                <div class="card-body">
                     <table class="table" id="products_table">
                         <thead>
                             <tr>

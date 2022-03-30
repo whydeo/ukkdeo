@@ -1,53 +1,74 @@
-@extends('layouts.dasboard')
+{{-- @extends('layouts.app')
+
+
+@section('style')
+    @include('layouts.style')
+@endsection
+
+
 @section('content')
-<div class="container ml-2 mt-4">
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Data Pegawai</h2>
+<div class="black"></div>
+<div class="top-bar mx-4">
+  <h1 class="text-white text-center overflow-hidden">Menu Caffe</h1>
+</div> 
+<div class="row ms-0" style="height: 84vh;">
+    <div class="col-3 form-pemesan p-4">
+        <div class="position-fixed text-center">
+            <div class="mb-3">  
+              <label for="exampleInputEmail1" class="text-white form-label">Nama Pemesan</label>
+              <input type="text" nama="nama" id="nama" class="form-control" required>
             </div>
-            <div class="pull-right mt-4 mb-4">
-                <a href="{{ route('pesan.create') }}" class="btn btn-success">Tambah Data</a>
+            <div class="mb-3">
+              <label for="meja" class="form-label text-white">Meja</label>
+              @if($dtmeja)
+              <select name="meja" class="form-select" id="meja">
+                <option value="">Pilih meja</option>
+                @foreach($dtmeja as $meja)
+                <option value="{{ $meja->id }}">{{ $meja->no_meja }}</option>
+                @endforeach
+              @else  
+                <input type="text" value="Sudah Penuh" disabled>
+              @endif
+              </select>
             </div>
         </div>
     </div>
-    {{-- @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
-    @endif
-    <table class="table table-bordered">
-        <tr>
-            <th>Nama</th>
-            <th>No Telepon</th>
-            <th>Status</th>
-            <th>Level</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Aksi</th>
-        </tr>
+    <div class="col-9 menu-makan example">
+      @foreach($dtkat as $kat)
+        @if ($kat->jumlah > 0)
+        <h3 class="text-center text-white">{{ $kat->nama_kategori }}</h3>
 
-        @foreach($peng as $p)
-        <tr>
-            <td>{{ $p->name }}</td>
-            <td>{{ $p->no_tlp }}</td>
-            <td>{{ $p->status}}</td>
-            <td>{{ $p->level }}</td>
-            <td>{{ $p->email }}</td>
-            <td>{{ $p->password }}</td>
-            <td>
-                {{-- <form action="{{ route('penguna.destroy', $p->id_penguna) }}" method="POST"> --}}
-                {{-- <a href="{{ route('pengguna.edit',$p->id_penguna) }}" class="btn btn-primary">Edit</a>
-
-                @csrf
-
-
-                </form>
-            </td>
-
-        </tr>
+        <div class="container menu_makanan">
+            @foreach($dtmenu as $menu)
+              @if($menu->kategori_id == $kat->id)
+              <div class="card">
+                  <img src="{{ asset('storage/'.$menu->foto) }}" class="card-img-top" style="width: 200px; height: 150px" alt="{{ $menu->nama_menu }}">
+                  <div class="card-body makan" data-id="{{ $menu->id }}">
+                    <h5 class="card-title" data-foto="{{ $menu->foto }}" >{{ $menu->nama_menu }}</h5>
+                    <p class="card-text">Rp {{ $menu->harga }}</p>
+                    <button class="btn btn-primary me-auto">+ Pesan</button>
+                    <div class="tambah_pesan">
+                      <button class="btn btn-primary kurang "> - </button>
+                      <input type="text" value="1" class="qty-pesan" readonly>
+                      <button class="btn btn-primary tambah"> + </button>
+                    </div>
+                  </div>
+                </div>
+              @endif
+            @endforeach
+        </div>
+        @endif
         @endforeach
-    </table> --}} 
-
+    </div>
 </div>
+<div class="bar-order">
+  <button id="back" class="btn btn-warning text-white">Back</button>
+    <button class="btn btn-success" id="next">Next</button>
+</div>
+
 @endsection
+@section('script')
+    <!-- Optional JavaScript; choose one of the two! -->
+    @include('layouts.script')
+    <script src="{{ asset('js/menu.js') }}"></script>
+@endsection --}}

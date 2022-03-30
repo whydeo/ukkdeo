@@ -8,7 +8,7 @@
                 <h2>Tambah Data</h2>
             </div>
             <div class="pull-right mt-4 mb-2">
-                <a class="btn btn-primary" href="{{ route('menu') }}">Kembali</a>
+                <a class="btn btn-primary" href="{{ route('menu.index') }}">Kembali</a>
             </div>
         </div>
     </div>
@@ -24,36 +24,36 @@
     </div>
     @endif
 
-    <form action="{{ route('update', $menu->id_menu) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('menu.update', $menu->id)}}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ method_field('put') }}
-        <input type="hidden" name="id_menu" value="{{ $menu->id_menu }}">
+        <input type="hidden" name="id" value="{{$menu->id}}">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Nama :</strong>
-                    <input type="text" name="nama" class="form-control" placeholder="cth.kopi" value="{{ $menu->nama}}">
+                    <strong>Nama menu :</strong>
+                    <input type="text" name="nama_menu" class="form-control" value="{{$menu->nama_menu}}">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>kategori:</strong>
-                    <input type="text" name="kategori" class="form-control" placeholder="cth. Televisi 4inch"value="{{ $menu  ->kategori}}" >
+                        <label for="kategori">Kategori</label>
+                        <select class="form-control" name="kategori_id" id="kategori">
+                                @foreach($kategori as $i => $kat)
+                          <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
+                            <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
+                          @endforeach
+                        </select>
                 </div>
             </div>
-             
-        </div>
-  
-    
-            <strong for="">harga</strong>
-            <div class="input-group mb-3">
-                <input type="harga" class="form-control" value="{{ $menu  ->harga}}" name="harga" placeholder="harga">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>harga :</strong>
+                    <input type="number" name="harga" class="form-control"  value="{{ $menu->harga}}">
+                </div>
             </div>
-            <strong for="">image </strong>
-            <div class="input-group mb-3">
-                <input id="image" type="text" class="form-control " name="image" placeholder="image" value="{{ $menu  ->image}}">
-            </div>
-        
+                  
+       
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
