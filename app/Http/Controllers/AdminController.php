@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meja;
-use App\Models\Pesanan;
 use Illuminate\Http\Request;
-use JavaScript;
-use DB;
-class MejaController extends Controller
+use app\models\user;
+use App\Models\penguna;
+use App\Models\Meja;
+use App\Models\Menu;
+use App\Models\Kategori;
+use App\Models\Pesanan;
+use App\Models\ActivityLog;
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +19,15 @@ class MejaController extends Controller
      */
     public function index()
     {
-        return view('admin.meja.index',[
-            'datameja' => Meja::all()
-        ]);
+        $user= User::select()->count();
+        $menu= menu::select()->count();
+        $meja= meja::select()->count();
+        $kategori= kategori::select()->count();
+        $pesanan= pesanan::select()->count();
+        $penguna= penguna::select()->count();
+        $activity_log= ActivityLog::with('user')->limit(10)->orderBy('id','DESC')->get();
+        return view('admin/logaktif',compact('user','menu','meja','kategori','pesanan','penguna','activity_log'));
+
     }
 
     /**
@@ -39,14 +48,7 @@ class MejaController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->validate([
-            'no_meja' => 'required',
-            'status' => 'required'
-        ]);
-        Meja::create($request->all());
-        activity()->log('menambah data meja');
-        return redirect()->route('meja.index')->with('success','Data Berhasil di tambah');
+        //
     }
 
     /**
@@ -66,12 +68,9 @@ class MejaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,$id)
+    public function edit($id)
     {
-        $meja= Meja::find($id);
-        return view ('admin/meja/edit', compact('meja'));
-
-
+        //
     }
 
     /**
@@ -83,16 +82,8 @@ class MejaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
-        $request->validate([
-            'status'=>'required',
-        ]);
-       Meja::where('id',$id)->update([
-        'status'=>$request['status'],
-       ]);
-       activity()->log('update  status meja');
-        return redirect()->route('meja.index')->with('success', "meja berhasil di update");
-            }
+        //
+    }
 
     /**
      * Remove the specified resource from storage.

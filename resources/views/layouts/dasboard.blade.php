@@ -37,16 +37,17 @@
                 @if(auth()->user()->level=="admin")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('pengguna.index') }}">pegawai</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#">log aktifitas pegawai</a> --}}
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('indexlog')}}">log aktifitas pegawai</a>
                 @elseif(auth()->user()->level=="manager")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('index')}}">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu.index')}}">menu</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('meja.index')}}">meja</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('kategori.index') }}">kategori</a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporantrans')}}"> laporan transaksi</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporandapat')}}"> laporan transaksi pendapatan </a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('carinama')}}"> laporan berdasar nama</a>
                 @elseif(auth()->user()->level=="kasir")
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
                  <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('datatrans')}}">data transaksi</a>
                  <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('kasir.index')}}">pesanan</a>
                 @endif
@@ -87,11 +88,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
-                            @endif
+                            @endif --}}
                             @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

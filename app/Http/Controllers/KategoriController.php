@@ -42,6 +42,7 @@ class KategoriController extends Controller
     {
         // dd($request);
         Kategori::create($request->all());
+        activity()->log('tambah kategori');
         return redirect()->route('kategori.index');
     }
 
@@ -84,7 +85,7 @@ class KategoriController extends Controller
        kategori::where('id',$id)->update([
         'nama_kategori'=>$request['nama_kategori'],
        ]);
-       
+       activity()->log('mengedit kategori');
         return redirect()->route('kategori.index')->with('success', "meja berhasil di update");
     }
 

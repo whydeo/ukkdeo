@@ -34,12 +34,12 @@
                     <input type="text" name="name" class="form-control" placeholder="cth.deoo">
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>nomor telepon :</strong>
                     <input type="text" name="no_tlp" class="form-control" placeholder="cth. Televisi 4inch">
                 </div>
-            </div>
+            </div> --}}
 
             <strong for="">level pegawai</strong>
             <div class="input-group mb-3">

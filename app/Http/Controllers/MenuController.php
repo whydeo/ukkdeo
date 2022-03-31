@@ -73,7 +73,7 @@ class MenuController extends Controller
             $kat = Kategori::find($request->kategori_id);
             $jml = $kat->jumlah + 1;
             $kat->update(['jumlah' => $jml]);
-       
+            activity()->log('menambah menu');
             return redirect()->route('menu.index');
     }
 
@@ -94,11 +94,12 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(request $request ,$id)
     {
-        $menu= menu::find($id,'id');
+        $menu= menu::find($id);
         $kategori= kategori::all();
-        //  dd($menu);
+
+        // dd($menu->nama_menu);
         return view ('menu/edit', compact('menu','kategori'));
     }
 
@@ -111,17 +112,27 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $request->validate([
             'nama_menu'=>'required',
             'harga'=>'required',           
             'kategori_id'=>'required',           
+            'foto'=>'required',           
         ]);
-        menu::where('id',$id)->update([
+ 
+           $ubah= menu::find($id);
+           $awal=$ubah->foto;
+           $sdt=[
             'nama_menu'=>$request['nama_menu'],
-            'foto'=>$request['foto'],
             'harga'=>$request['harga'],
             'kategori_id'=>$request['kategori_id'],
-           ]);
+            'foto'=>$awal,
+           ];
+        //    dd($ubah);
+
+           $request->foto->move(public_path().'/imagemenu',$awal);
+           $ubah->update($sdt);
+           activity()->log('update menu');
            return redirect()->route('menu.index');
     }
 

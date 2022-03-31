@@ -10,9 +10,10 @@
                         <h4 class="page-title">Laporan</h4>
                     </div>
                 </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <form class="form" method="get" action="{{ route('carinama') }}">
                         <div class="form-group w-100 mb-3">
-                            <label for="search" class="d-block mr-2">Pencarian</label>
+                            <label for="search" class="d-block mr-2">Pencarian by named</label>
                             <input type="text" name="search" class="form-control w-75 d-inline" id="search" placeholder="Masukkan nama pegawai">
                             <button type="submit" class="btn btn-primary mb-1">Cari</button>
                         </div>
@@ -22,6 +23,7 @@
                         <p>{{ $message }}</p>
                     </div>
                     @endif
+                    </div>
                 <div class="container-fluid">
                     <div class="row">
                         <table class="table table-hover table-bordered">

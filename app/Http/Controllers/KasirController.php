@@ -78,7 +78,7 @@ class KasirController extends Controller
             'nama_pegawai'=>$email,
         ]);
         Meja::find($request->meja_id)->update(['status' => 'Tidak Tersedia']);
-
+        activity()->log('kasir melakukan transaksi');
         return redirect()->route('kasir.index')->with('success',' transaksi Berhasil di Input');
     }
 

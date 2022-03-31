@@ -20,7 +20,7 @@ use App\Http\Controllers\MejaController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Auth::routes();
@@ -70,3 +70,4 @@ Route::get('pelanggan.cetakpesanan',[App\Http\Controllers\KasirController::class
     // Route::post('/pesan/tambah_pesan', [App\Http\Controllers\KasirController::class, 'order'])->middleware('ceklevel:kasir');
     // Route::get('/pesan/{id}', [App\Http\Controllers\KasirController::class, 'tambahpesan'])->middleware('ceklevel:kasir');
     // Route::get('/cetak/{id}',  [App\Http\Controllers\KasirController::class, 'cetakpesan'])->middleware('ceklevel:kasir');
+    Route::get('admin/logaktif',[App\Http\Controllers\AdminController::class, 'index'])->name('indexlog')->middleware('ceklevel:admin');

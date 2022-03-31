@@ -52,6 +52,17 @@
                     <input type="number" name="harga" class="form-control"  value="{{ $menu->harga}}">
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>foto :</strong>
+                    <input type="file" name="foto" class="form-control" multiple>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                        <img src="{{asset('imagemenu/'.$menu->foto)}}" alt="" style="width:100px";>
+                </div>
+            </div>
                   
        
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

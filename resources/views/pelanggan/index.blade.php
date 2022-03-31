@@ -15,6 +15,8 @@
 </div>
 @endif
 <center><h1>CAFEEE ASEEEK ASEEKK</h1></center>
+<button class="btn btn-primary"><a href="{{ route('home') }}">back</a>
+</button>
 <div class="row ms-0" style="height: 84vh;">
     <div class="col-3 form-pemesan p-4">
         <div class="position-fixed text-center">

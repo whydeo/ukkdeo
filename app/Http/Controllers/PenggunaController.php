@@ -41,22 +41,15 @@ class PenggunaController extends Controller
 
     public function store(Request $request)
     {
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email'=>'required',
+        //     'password' => ['required', 'string', 'min:4', 'confirmed'],
+        //     'level'=>'required',
+        //      'status'=>'required',
+        // ]);
         // dd($request);
-        $request->validate([
-            'name'=>'required',
-            'no_tlp'=>'required',
-            'level'=>'required',
-            'status'=>'required',
-            'email'=>'required',
-            'password' => ['required', 'string', 'min:4', 'confirmed'],
-            // 'image'=>'required',
-        ]);
 
-        // $image = $request->file('image');
-        // $nameImage = $request->file('image')->getClientOriginalName();
-        // $thumbImage = image::make($image->getRealPath())->resize(85, 85);
-        // $thumbPath = public_path() . '/image/' . $nameImage;
-        // $thumbImage = Image::make($thumbImage)->save($thumbPath);
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -68,10 +61,8 @@ class PenggunaController extends Controller
 
         penguna::create([
             'name'=> $request['name'],
-            'no_tlp'=>$request['no_tlp'],
             'level'=>$request['level'],
-            'status'=>$request['status'],
-            // 'image'=>$request['image'],
+             'status'=>$request['status'],
             'email'=>$request['email'],
             'password'=>$request['password'],
 
@@ -96,7 +87,6 @@ class PenggunaController extends Controller
 
                 $inputan = [
                     'name'=> $request['name'],
-                    'notlp'=>$request['no_tlp'],
                     'level'=>$request['level'],
                     'status'=>$request['status'],
                     // 'image'=>$request['image'],
@@ -116,7 +106,7 @@ class PenggunaController extends Controller
 
                 DB::table('penguna_has_manager')->insert($datasave);
 
-
+                activity()->log('menambah user');
             return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
 
             } else {
@@ -126,17 +116,15 @@ class PenggunaController extends Controller
 
                 $inputan = [
                     'name'=> $request['name'],
-                    'notlp'=>$request['no_tlp'],
                     'level'=>$request['level'],
-                    'status'=>$request['status'],
-                    // 'image'=>$request['image'],
+                     'status'=>$request['status'],
                     'email'=>$request['email'],
                     'password'=>$request['password'],
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
                 ];
                 DB::table('kasir')->insert($inputan);
-
+                // $id_manager = DB::table('manager')->where('level', $request['level'])->value('id_manager');
                 $id_kasir = DB::table('kasir')->where('level', $request['level'])->value('id_kasir');
 
                $datasave = [
@@ -153,13 +141,6 @@ class PenggunaController extends Controller
 
 
             }
-
-
-            // managefr
-
-
-            // return redirect()->route('pengguna.index')->with('success','Data Berhasil di Input');
-
     }
 
     /**
@@ -179,21 +160,9 @@ class PenggunaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit( $pe)
+    public function edit( $id)
     {
-        $peng = DB::table('penguna')
-        ->leftjoin('penguna_has_user', 'penguna.id_penguna', '=', 'penguna_has_user.id_penguna')
-        ->leftjoin('users','penguna_has_user.id_user', '=', 'users.id')
-        ->leftjoin('penguna_has_kasir', 'penguna.id_penguna', '=', 'penguna_has_kasir.id_penguna')
-        ->leftjoin('kasir','penguna_has_kasir.id_kasir', '=', 'kasir.id_kasir')
-        ->leftjoin('penguna_has_manager', 'penguna.id_penguna', '=', 'penguna_has_manager.id_penguna')
-        ->leftjoin('manager','penguna_has_manager.id_manager', '=', 'manager.id_manager')
-        ->leftjoin('model_has_roles', 'penguna.id_penguna', '=', 'model_has_roles.model_id')
-        ->leftjoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-        ->where('model_has_roles.model_id', $pe)
-        ->select('penguna.level','penguna.status','penguna.name','model_has_roles.model_id')
-        ->get();
-    //   dd($peng);
+        $peng =DB::table('penguna')->where('id_penguna',$id)->get();
         return view('admin/edit',['peng' => $peng]);
 
 
@@ -202,39 +171,35 @@ class PenggunaController extends Controller
 
     public function update(Request $request, $id )
     {
-      
-        
+      DB::table('penguna')->where('id_penguna',$id)->get();
+        // dd($request);
      
 $request->validate([
+      
         'status'=>'required',
-        'level'=>'required',
         ]);
        
-        // dd($request->status);
-         DB::table('penguna')->where('id_penguna',$id)->update(['status' => $request->status]);
-
-         $deo = DB::table('penguna')->where('id_penguna',$id)->get();
-         
-        // dd($deo);
+        $deo = $request->level; 
+        
+          DB::table('penguna')->where('id_penguna',$id)->update(['status' => $request->status]);
+        //  $deo = DB::table('penguna')->where('id_penguna',$id)->get();
+        //  dd($deo);
         
         if ($deo  == 'manager') {
-            DB::table('manager')->where('id_manager',$id)->update(['status' => $deo->status]);
-            dd($deo);
-        } elseif ($deo == 'kasir'){
-            DB::table('kasir')->where('id_kasir',$id)->update(['status' => $deo->status]);
+             DB::table('manager')->where('id_manager',$id)->update(['status' => $request->status]);
+        
+         
+        } 
+         elseif ($deo == 'kasir'){
+             $id_kasir = DB::table('penguna_has_kasir')->where('id_penguna', $id)->value('id_kasir');
+            //   dd($id_kasir);
+            DB::table('kasir')->where('id_kasir',$id_kasir)->update(['status' => $request->status]);
 
-        }
+       }
       
         
-        
-        // DB::table('kasir')->where('id_kasir',$id)->update([
-        //     'status' => $request->status,
-
-        // ]);
-        // DB::table('manager')->where('id_manager',$id)->update([
-        //     'status' => $request->status,
-
-        // ]);
+    
+       activity()->log('update status user');
 
 
         return redirect()->route('pengguna.index')->with('success','Data Berhasil di update');
