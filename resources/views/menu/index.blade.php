@@ -42,7 +42,7 @@
                       </th>
                     </thead>
                     <tbody>
-                      @foreach($datamenu as $menu)
+                      @foreach($datamenu as $key=>$menu)
                       <tr>
                         <td style="display: none">{{ $menu->id }}</td>
                         <td>

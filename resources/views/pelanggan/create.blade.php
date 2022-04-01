@@ -12,7 +12,6 @@
             </div>
         </div>
     </div>
-
     @if ($errors->any())
     <div class="alert alert-danger">
         <strong>Maaf</strong> Data yang anda inputkan bermasalah.<br><br>
@@ -39,15 +38,15 @@
             <div class="col-xs-4 col-sm-4 col-md-4">
               <div class="form-group">
                   <strong>harga :</strong>
-                  <input type="number" name="harga" class="form-control" id="harga" value="{{ $menu[0]->harga}}" disabled>
-                  <input type="hidden" name="harga" class="form-control" id="harga" value="{{ $menu[0]->harga}}" >
-                  <input type="hidden" name="nama_menu" class="form-control"  value="{{ $menu[0]->nama_menu}}" >
+                  <input type="number" name="harga" class="form-control" id="harga" value="{{ $ambil[0]->harga}}" disabled>
+                  <input type="hidden" name="harga" class="form-control" id="harga" value="{{ $ambil[0]->harga}}" >
+                  <input type="hidden" name="nama_menu" class="form-control"  value="{{ $ambil[0]->nama_menu}}" >
               </div>
           </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
                     <strong>jumlah pesanan :</strong>
-                    <input type="number" name="jumblah" class="form-control" id="jumlah" value="{{ $datapesan->jumblah}}" >
+                    <input type="number" name="jumblah" class="form-control" id="jumlah" value="{{ $datapesan->jumblah}}" disabled>
                     <input type="hidden" name="jumblah" class="form-control" id="jumlah" value="{{ $datapesan->jumblah}}" >
                 </div>
             </div>
@@ -97,7 +96,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#jumlah, #harga").hover(function() {
+        $("#jumlah, #harga").ready(function() {
             var harga  = $("#harga").val();
             var jumlah = $("#jumlah").val();
             var total = parseInt(harga) * parseInt(jumlah);

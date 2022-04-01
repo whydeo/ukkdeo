@@ -40,6 +40,7 @@ Route::get('manager/laporan', [App\Http\Controllers\ManagerController::class, 'l
 Route::get('laporanpendapatan', [App\Http\Controllers\ManagerController::class, 'laporandapat'])->name('laporandapat')->middleware('ceklevel:manager');
 Route::get('carimanager', [ManagerController::class, 'cari'])->name('carimanager');
 Route::get('carinama', [ManagerController::class, 'search'])->name('carinama');
+Route::get('caritertentu', [ManagerController::class, 'caris'])->name('caris');
 
 // Route::get('manager.laporan', [App\Http\Controllers\ManagerController::class, 'cari'])->name('cari')->middleware('ceklevel:manager');
 // Route::get('menu/index', [App\Http\Controllers\MenuController::class, 'index'])->name('menu')->middleware('ceklevel:manager');
@@ -61,13 +62,15 @@ Route::resource('pesan','PesanController')->middleware('ceklevel:kasir');
 Route::resource('kategori','KategoriController')->middleware('ceklevel:manager');
 Route::resource('meja','MejaController')->middleware('ceklevel:manager');
  Route::resource('kasir','kasirController')->middleware('ceklevel:kasir');
-// Route::get('pelanggan.bayar',[App\Http\Controllers\KasirController::class, 'tampung'])->name('tampung')->middleware('ceklevel:kasir');
+// Route::get('pelanggan.bayar',[App\Ht tp\Controllers\KasirController::class, 'tampung'])->name('tampung')->middleware('ceklevel:kasir');
 Route::post('pelanggan.create',[App\Http\Controllers\KasirController::class, 'tampung'])->name('tampung')->middleware('ceklevel:kasir');
 Route::get('pelanggan.show',[App\Http\Controllers\KasirController::class, 'datatrans'])->name('datatrans')->middleware('ceklevel:kasir');
-Route::get('pelanggan.cetakpesanan',[App\Http\Controllers\KasirController::class, 'cetak'])->name('cetak')->middleware('ceklevel:kasir');
+Route::post('pelanggan.cetakpesanan',[App\Http\Controllers\KasirController::class, 'cetak'])->name('cetak')->middleware('ceklevel:kasir');
 
     // Route::get('/list', [App\Http\Controllers\KasirController::class , 'showlist']);
     // Route::post('/pesan/tambah_pesan', [App\Http\Controllers\KasirController::class, 'order'])->middleware('ceklevel:kasir');
     // Route::get('/pesan/{id}', [App\Http\Controllers\KasirController::class, 'tambahpesan'])->middleware('ceklevel:kasir');
     // Route::get('/cetak/{id}',  [App\Http\Controllers\KasirController::class, 'cetakpesan'])->middleware('ceklevel:kasir');
     Route::get('admin/logaktif',[App\Http\Controllers\AdminController::class, 'index'])->name('indexlog')->middleware('ceklevel:admin');
+    
+    // Route::get('print',[App\Http\Controllers\TamuController::class, ''])->name('indexlog')->middleware('ceklevel:admin');

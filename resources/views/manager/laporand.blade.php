@@ -10,22 +10,11 @@
                         <h4 class="page-title">Laporan</h4>
                     </div>
                 </div>
-                <form action="{{route('carimanager')}}" method="get">
-                    @csrf
-                    <div class="form-group row">
-                        <label for="from" class=" col-sm-2">Date From:</label>
-                        <div class="col-sm-2">
-                            <input type="date" class="form-control input-sm w-200" id="from" name="from"  required>
-                        </div>
-                        <label for="to" class="col-form-label col-sm-2">Date to:</label>
-                        <div class="col-sm-2">
-                            <input type="date" class="form-control input-sm w-200" id="to" name="to" required>
-                        </div>
-                        <div class="col-sm-2">
-                        <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-search"></i>search</button>
-                        </div>
-                    </div>
-                </form>
+                <form action="{{route('caris')}}" method="get">
+                  @csrf
+                  <input type="date" placeholder="Cari Tanggal" name="search" class="form-control w-25 d-inline">
+                  <button type="submit" class="btn btn-primary mb-1">Cari</button>
+                </form>  
         </div>
         @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -37,21 +26,7 @@
         <p>{{ $message }}</p>
         </div>
         @endif
- <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                <form class="form" method="get" action="{{ route('carinama') }}">
-                        <div class="form-group w-100 mb-3">
-                            <label for="search" class="d-block mr-2">Pencarian by named</label>
-                            <input type="text" name="search" class="form-control w-75 d-inline" id="search" placeholder="Masukkan nama pegawai">
-                            <button type="submit" class="btn btn-primary mb-1">Cari</button>
-                        </div>
-                    </form>
-                    @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                    @endif
-                    </div>
-                </div>
+
                <div class="container">
                     <div class="container-fluid">
                             <div class="row">
@@ -64,7 +39,6 @@
                                         <th>Nama Pegawai</th>
                                         <th>Tanggal</th>
                                     </tr>
-                                    {{-- @isset($search) --}}
                                     @foreach($data as $key=> $u)
                                     <tr>
                                     <td>{{++$key}}</td>
@@ -75,11 +49,9 @@
                                     <td>{{$u->nama_pegawai}}</td>
                                     <td>
                                         {{$u->created_at}}
-                                       {{-- <a href="createkasir" class="btn btn-warning">Pesan</a>  --}}
                                     </td>
                                     </tr>
                                     @endforeach 
-                                    {{-- @endisset --}}
                                 </table>
                             </div>
         </div>

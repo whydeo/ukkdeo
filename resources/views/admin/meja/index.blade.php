@@ -81,7 +81,6 @@
                 <input type="number" class="form-control" name="no_meja" id="no_meja" placeholder="masukkan nomor meja..">
                   <span class="text-success" style="display: none">nomor meja bisa digunakan</span>
                   <span class="text-danger" style="display: none">nomor meja Sudah ada</span>
-                
               </div>
                 <p class="m-0">Status</p>
                 <div class="form-check form-check-inline">

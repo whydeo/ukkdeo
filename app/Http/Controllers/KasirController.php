@@ -11,7 +11,7 @@ use App\Models\Menu;
 use App\Models\Menupesan;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use Carbon\Carbon;
 use DB;
 
 class KasirController extends Controller
@@ -35,18 +35,40 @@ class KasirController extends Controller
          
     }
     public function tampung(Request $datapesan){
+        //   dd($datapesan);
        $datapesan->validate([
             'nama_pemesan' =>'required',
             'meja_id' =>'required',
             'menu_id' =>'required',
             'jumblah' =>'required',
         ]);
+        
+        // $semuamenu = [];
+        // for ($i=0; $i < count($datapesan->menu_id); $i++) { 
+        //     $ambil = DB::table('menu')->where('id', $datapesan->menu_id[$i])->get();
 
-        // dd($datapesan);
-        $menu = DB::table('menu')->where('id', $datapesan->menu_id)->get();
+        //     array_push($semuamenu, $ambil);
+
+        //     $total= 0;
+
+        // }
+        // dd($semuamenu);
+        $ambil = DB::table('menu')->where('id', $datapesan->menu_id)->get();
         $meja =DB::table('mejas')->where('id',$datapesan->meja_id)->get();
-        // dd($menu,$meja);
-        return view ('pelanggan.create', compact('datapesan','menu','meja')); 
+        // dd($semuamenu,$meja,$datapesan);
+        return view ('pelanggan.create', compact('datapesan','ambil','meja')); 
+
+        // $menu = DB::table('menu')->where('id', $datapesan->menu_id);
+        // foreach ($menu as $menus) {
+        //     $res[] = [
+        //        'id' => $datapesan->menu_id, 
+        //     ];
+        //  }; 
+
+        // // $menus=$menu ->toArray();
+        // $meja =DB::table('mejas')->where('id',$datapesan->meja_id)->get();
+        //  dd($res,$meja);
+        // return view ('pelanggan.create', compact('datapesan','res','meja')); 
 
     }
     
@@ -79,7 +101,13 @@ class KasirController extends Controller
         ]);
         Meja::find($request->meja_id)->update(['status' => 'Tidak Tersedia']);
         activity()->log('kasir melakukan transaksi');
-        return redirect()->route('kasir.index')->with('success',' transaksi Berhasil di Input');
+
+        $print = $request;
+            $auth =$email;
+            $date = date('Y-m-d H:i');
+            // dd($print);q cv
+        // return redirect()->route('cetak'.$request);
+            return view('pesan.print', compact('print','email','date'));
     }
 
     public function cetak($id){

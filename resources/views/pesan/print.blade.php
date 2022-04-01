@@ -62,42 +62,41 @@
     </style>
 </head>
 <body>
-    <figure>
-        <img src="{{ asset('img/pandalogo.png') }}" alt="pandaman">
-    </figure>
-    <p class="title">Caffe asekk asekkk</p>
-    <p class="alamat">Jl.Banana <br> soe</p>
+    
+    <p class="title">2y1le</p>
+    <p class="alamat">Jl.2yle <br> soe</p>
     <table class="pos">
         <tr>
             <td style="text-align:right; width:630px;">Pos Title:</td>
-            <td align="right" style="width: 50px;">Kasir</td>
+            <td align="right" style="width: 50px;">{{$email}}</td>
         </tr>
     </table>
     <hr>
-    <p class="Order">Order By: {{ $request->nama_pemesan }} <br> No. Meja: {{ $request->meja }} <br> Order Date: {{ $request->created_at }}</p>
+    <p class="Order">Order By: {{ $print->nama_pemesan }} <br> No. Meja: {{ $print->meja }} <br> Order Date: {{ $date }}</p>
     <hr>
     <hr style="margin-top: 4px">
     <table class="table-pesanan">
         <tr class="tr-head">
-            <th style="width: 380px; text-align:left">Pesanan</th>
-            <th style="width: 150px;">Harga</th>
+            <th >Pesanan</th>
+            <th>Harga</th>
             <th>QTY</th>
-            <th style="text-align:right; width: 100px;">Total</th>
+            <th >Total</th>
+            <th >bayar</th>
         </tr>
-        @foreach($request->pesanan as $pesan)
         <tr>
-            <td>{{ $pesan->menu->nama_menu }}</td>
-            <td align="center">Rp {{ $pesan->menu->harga }}</td>
-            <td align="center">{{ $pesan->jumblah }}</td>
-            <td align="right">Rp {{ $pesan->menu->harga*$pesan->jumblah}}</td>
+            <td>{{ $print->nama_menu }}</td>
+            <td align="center">Rp {{ $print->harga }}</td>
+            <td align="center">{{ $print->jumblah }}</td>
+            <td align="right">Rp {{ $print->harga*$print->jumblah}}</td>
+            <td align="right">Rp {{ $print->total_bayar}}</td>
         </tr>
-        @endforeach
+  
     </table>
     <hr>
     <table class="table-total">
         <tr>
             <th style="width: 530px; text-align: right;">Total :</th>
-            <td style="width: 150px; text-align: right;">Rp {{ $dtpemesan->Total_beli }}</td>
+            <td style="width: 150px; text-align: right;">Rp {{ $print->harga*$print->jumblah}}</td>
         </tr>
     </table>
     <hr>

@@ -31,7 +31,7 @@
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-dark" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-dark text-light">Cafe Asek Asek</div>
+            <div class="sidebar-heading border-bottom bg-dark text-light">2y1le</div>
             <hr>
             <div class="list-group list-group-flush">
                 @if(auth()->user()->level=="admin")
@@ -45,7 +45,7 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('kategori.index') }}">kategori</a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporantrans')}}"> laporan transaksi</a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporandapat')}}"> laporan transaksi pendapatan </a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('carinama')}}"> laporan berdasar nama</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('caris')}}"> laporan tertentu</a>
                 @elseif(auth()->user()->level=="kasir")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
                  <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('datatrans')}}">data transaksi</a>

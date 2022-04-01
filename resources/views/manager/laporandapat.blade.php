@@ -36,7 +36,7 @@
                     <div class="alert alert-danger">
                     <p>{{ $message }}</p>
                     </div>
-        @endif
+                @endif
                 <div class="container-fluid">
                     <div class="row">
                         <table class="table table-hover table-bordered">
@@ -46,7 +46,7 @@
                             </tr>
                             @foreach($data as $u)
                             <tr>
-                            <td>{{$u->total_beli}}</td>
+                            <td>{{$u->total_beli  }}</td>
                             <td>
                                 {{$u->created_at}}
                                {{-- <a href="createkasir" class="btn btn-warning">Pesan</a>  --}}
@@ -55,6 +55,8 @@
                             @endforeach 
                         </table>
                     </div>
+                    
+                    
 </div>
     </div>
 </div>

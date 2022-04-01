@@ -83,11 +83,20 @@
               </select>
           <label for="menu" class="form-label text-black">menu</label>
               @if($dtmenu)
-              <select name="menu_id" class="form-select" id="menu">
-                <option value="">Pilih menu</option>
-                @foreach($dtmenu as $menu)
-                <option value="{{ $menu->id }}">{{ $menu->nama_menu }}.....RP..{{ $menu->harga }}</option>
+              <div>
+                <select name="menu_id" id="" class="form-control">
+                    <option >pilih menu</option>
+                @foreach ($dtmenu as $menu)
+                
+               
+                <option value="{{$menu->id}}">{{$menu->nama_menu}} =RP ..{{$menu->harga}}</option>
+                {{-- <input type="checkbox" name="menu_id[]" value="{{$menu->id}}">
+                <label for="menu_id"> {{$menu->nama_menu}}</label><br>
+                <input type="number" class="form-control" name="jumblah[]" placeholder="masukan jumlah menu"> --}}
+               
                 @endforeach
+              </select>
+              </div>
               @else  
                 <input type="text" value="Sudah Penuh" disabled>
               @endif
@@ -98,7 +107,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">bayar </button>
+            <button type="submit" value="submit" class="btn btn-primary">bayar </button>
           </div>
         </div>
       </div>

@@ -40,7 +40,6 @@
                         <label for="kategori">Kategori</label>
                         <select class="form-control" name="kategori_id" id="kategori">
                                 @foreach($kategori as $i => $kat)
-                          <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
                             <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
                           @endforeach
                         </select>

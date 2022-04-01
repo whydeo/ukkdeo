@@ -34,6 +34,7 @@ class ManagerController extends Controller
         $from = $request->from;
         $to = $request->to;
         $data = pesanan::whereBetween('created_at',array($from, $to))->paginate(10);
+        // dd($data);
         return view('manager.laporandapat', compact('data'));
     }
     public function cari(Request $request){
@@ -48,7 +49,14 @@ class ManagerController extends Controller
     {
         $keyword = $request->search;
         $data = pesanan::where('nama_pegawai', 'like', "%" . $keyword . "%")->paginate(5);
-        return view('manager.transnam', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('manager.laporan', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+    public function caris(Request $request)
+    {
+        $search = $request->search;
+        $data = pesanan::where('created_at', array($search))->paginate(5);
+        dd($data);
+        return view('manager.laporand', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
     public function create()
     {
