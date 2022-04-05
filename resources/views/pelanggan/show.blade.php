@@ -37,21 +37,26 @@
 
                     </thead>
                     <tbody>
-                      @foreach($datapesan as $data)
-                      <tr>
-                      <td>{{$data->nama_pemesan}}</td>
-                      <td>{{$data->nama_menu}}</td>
-                      <td>{{$data->harga}}</td>
-                      <td>{{$data->jumblah}}</td>
-                      <td>{{$data->meja}}</td>
-                      <td>{{$data->total_beli}}</td>
-                      <td>{{$data->total_bayar}}</td>
-                      <td>{{$data->kembalian}}</td>
-                      <td>{{$data->created_at}}</td>
-                      <td>{{$data->nama_pegawai}}</td>
-                      </tr>
-                      @endforeach
-                       
+
+                        @foreach($datapesan as $data)
+                        @if (auth()->user()->name == $data->nama_pegawai)
+                        <tr>
+                        <td>{{$data->nama_pemesan}}</td>
+                        <td>{{$data->nama_menu}}</td>
+                        <td>{{$data->harga}}</td>
+                        <td>{{$data->jumblah}}</td>
+                        <td>{{$data->meja}}</td>
+                        <td>{{$data->total_beli}}</td>
+                        <td>{{$data->total_bayar}}</td>
+                        <td>{{$data->kembalian}}</td>
+                        <td>{{$data->created_at}}</td>
+                        <td>{{$data->nama_pegawai}}</td>
+                        </tr>
+                        @endif
+                        @endforeach
+
+
+
                     </tbody>
                   </table>
                 </div>
@@ -68,7 +73,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-            
+
       @endsection
       @section('script')
         @include('admin.script')
