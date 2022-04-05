@@ -16,7 +16,6 @@ class CreatePengunaTable extends Migration
         Schema::create('penguna', function (Blueprint $table) {
             $table->id('id_penguna');
             $table->string('name');
-            $table->string('no_tlp');
             $table->string('level');
             $table->string('status');
             $table->string('email');

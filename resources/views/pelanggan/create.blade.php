@@ -85,9 +85,8 @@
             <br>
             <br>
            
-            <center>
+           
                 <button type="submit" class="btn btn-primary">bayar</button>
-            <a href="{{route('cetak',$datapesan->id)}}" class="btn btn-sm btn-success mb4">cetakk</a>            </center>
            
         </div>
 

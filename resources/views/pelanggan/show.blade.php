@@ -32,30 +32,28 @@
                       <th>total pemesanan</th>
                       <th>total bayar</th>
                       <th>kembalian</th>
-                      <th>waktu pemesanan</th>
                       <th>nama pegawai</th>
+                      <th>waktu pemesanan</th>
+
 
                     </thead>
                     <tbody>
-
-                        @foreach($datapesan as $data)
-                        @if (auth()->user()->name == $data->nama_pegawai)
-                        <tr>
-                        <td>{{$data->nama_pemesan}}</td>
-                        <td>{{$data->nama_menu}}</td>
-                        <td>{{$data->harga}}</td>
-                        <td>{{$data->jumblah}}</td>
-                        <td>{{$data->meja}}</td>
-                        <td>{{$data->total_beli}}</td>
-                        <td>{{$data->total_bayar}}</td>
-                        <td>{{$data->kembalian}}</td>
-                        <td>{{$data->created_at}}</td>
-                        <td>{{$data->nama_pegawai}}</td>
-                        </tr>
-                        @endif
-                        @endforeach
-
-
+                      @foreach($datapesan as $data)
+                      <tr>
+                    @if (auth()->user()->name == $data->nama_pegawai )
+                      <td>{{$data->nama_pemesan}}</td>
+                      <td>{{$data->nama_menu}}</td>
+                      <td>{{$data->harga}}</td>
+                      <td>{{$data->jumblah}}</td>
+                      <td>{{$data->meja}}</td>
+                      <td>{{$data->total_beli}}</td>
+                      <td>{{$data->total_bayar}}</td>
+                      <td>{{$data->kembalian}}</td>
+                      <td>{{$data->nama_pegawai}}</td>
+                      <td>{{$data->created_at}}</td>
+                      </tr>
+                    @endif
+                      @endforeach
 
                     </tbody>
                   </table>
@@ -64,7 +62,7 @@
             </div>
           </div>
       </div>
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -72,7 +70,7 @@
                 <button type="button" class="close tutup-modal" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
+              </div> --}}
 
       @endsection
       @section('script')

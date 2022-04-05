@@ -45,13 +45,13 @@
             font-size: 25px;
         }
         .table-pesanan{
-            margin: auto; 
-            font-size: 22px;     
+            margin: auto;
+            font-size: 22px;
         }
         .table-total{
             margin: auto;
-            
-            font-size: 22px;     
+
+            font-size: 22px;
 
         }
         .thanks{
@@ -62,12 +62,12 @@
     </style>
 </head>
 <body>
-    
+
     <p class="title">2y1le</p>
-    <p class="alamat">Jl.2yle <br> soe</p>
+    <p class="alamat">Jl.2yle <br> unknown</p>
     <table class="pos">
         <tr>
-            <td style="text-align:right; width:630px;">Pos Title:</td>
+            <td style="text-align:right; width:630px;">kasir:</td>
             <td align="right" style="width: 50px;">{{$email}}</td>
         </tr>
     </table>
@@ -82,6 +82,7 @@
             <th>QTY</th>
             <th >Total</th>
             <th >bayar</th>
+            <th >kembalian</th>
         </tr>
         <tr>
             <td>{{ $print->nama_menu }}</td>
@@ -89,8 +90,9 @@
             <td align="center">{{ $print->jumblah }}</td>
             <td align="right">Rp {{ $print->harga*$print->jumblah}}</td>
             <td align="right">Rp {{ $print->total_bayar}}</td>
+            <td align="right">Rp {{ $print->kembalian}}</td>
         </tr>
-  
+
     </table>
     <hr>
     <table class="table-total">
@@ -107,4 +109,6 @@
     window.print();
 
 </script>
+
 </html>
+

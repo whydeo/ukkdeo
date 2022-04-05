@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,13 +44,13 @@
             font-size: 25px;
         }
         .table-pesanan{
-            margin: auto; 
-            font-size: 22px;     
+            margin: auto;
+            font-size: 22px;
         }
         .table-total{
             margin: auto;
-            
-            font-size: 22px;     
+
+            font-size: 22px;
 
         }
         .thanks{
@@ -90,6 +89,7 @@
             <td align="center">Rp {{ $pesan->menu->harga }}</td>
             <td align="center">{{ $pesan->jumblah }}</td>
             <td align="right">Rp {{ $pesan->menu->harga*$pesan->jumblah}}</td>
+            <td align="right">Rp {{ $pesan->kembalian}}</td>
         </tr>
         @endforeach
     </table>

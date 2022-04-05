@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Kategori;
+use app\models\user;
 use App\Models\Meja;
 use App\Models\Menu;
+use App\Models\Kategori;
 use App\Models\Pesanan;
-use App\Models\User;
+use App\Models\ActivityLog;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
-use Illuminate\Http\Request;
-
 class ManagerController extends Controller
 {
     /**
@@ -29,65 +29,102 @@ class ManagerController extends Controller
 
     public function laporantrans()
     {
-        $data=pesanan::paginate(7);
-        return view ('manager.laporan', compact('data'));
+        // $month = request('month', date('m'));
+        // dd($month);
+
+//         $bln = DB::table('pesanans')
+//         ->select('created_at', DB::raw('SUM(total_beli) as total_beli'))
+//         ->where('created_at', '=', 'created_at'->format('m'))
+//         ->havingRaw('SUM(total_beli) > ?', [0])
+//         ->get();
+// dd($bln);
+
+    $day = DB::table('pesanans')
+                ->select('created_at', DB::raw('SUM(total_beli) as total_beli'))
+                ->where('created_at', '>=', date('Y-m-d-h-i-s'))
+                ->havingRaw('SUM(total_beli) > ?', [0])
+                ->get();
+                //  dd($day);
+        $data=pesanan::paginate(10);
+
+
+        return view ('manager.laporan', compact('data','day'));
     }
+
+
     public function laporandapat(Request $request)
     {
         $from = $request->from;
         $to = $request->to;
         $data = pesanan::whereBetween('created_at',array($from, $to))->paginate(10);
         // dd($data);
-        return view('manager.laporandapat', compact('data'));
+        $day = DB::table('pesanans')
+                ->select('created_at', DB::raw('SUM(total_beli) as total_beli'))
+                ->where('created_at', '>=', date('Y-m-d-h-i-s'))
+                ->havingRaw('SUM(total_beli) > ?', [0])
+                ->get();
+        return view('manager.laporandapat', compact('data','day'));
     }
     public function cari(Request $request){
         $from = $request->from;
         $to = $request->to;
         $data = pesanan::whereBetween('created_at',array($from, $to))->paginate(10);
+        $day = DB::table('pesanans')
+                ->select('created_at', DB::raw('SUM(total_beli) as total_beli'))
+                ->where('created_at', '>=', date('Y-m-d-h-i-s'))
+                ->havingRaw('SUM(total_beli) > ?', [0])
+                ->get();
 
-        return view('manager.laporan', compact('data'));
+        return view('manager.laporan', compact('data','day'));
 
     }
     public function search(Request $request)
     {
         $keyword = $request->search;
         $data = pesanan::where('nama_pegawai', 'like', "%" . $keyword . "%")->paginate(5);
-        return view('manager.laporan', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $day = DB::table('pesanans')
+                ->select('created_at', DB::raw('SUM(total_beli) as total_beli'))
+                ->where('created_at', '>=', date('Y-m-d-h-i-s'))
+                ->havingRaw('SUM(total_beli) > ?', [0])
+                ->get();
+        return view('manager.laporan', compact('data','day'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+    public function totall(Request $request)
+    {
+        $keyword = $request->search;
+        $data = pesanan::where('created_at', 'like', "%" . $keyword . "%")
+        ->sum('total_beli');
+        // ->paginate(5);
+        //   dd($keyword);
+
+        return view('manager.laporantotal', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
     public function caris(Request $request)
     {
-        $keyword =$request->search;
-         $data =pesanan::where('created_at','like','%'.$keyword.'%')->get();
-        // dd($keyword);
-        return view('manager.laporand', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $keyword = $request->search;
+        $data = pesanan::where('created_at', 'like', "%" . $keyword . "%")->paginate(5);
+        $day = DB::table('pesanans')
+                ->select('created_at', DB::raw('SUM(total_beli) as total_beli'))
+                ->where('created_at', '>=', date('Y-m-d-h-i-s'))
+                ->havingRaw('SUM(total_beli) > ?', [0])
+                ->get();
+        return view('manager.laporan', compact('data','day'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
-    // public function total(Request $data ){
+    public function log()
+    {
+        $user= User::select()->count();
+        // $menu= menu::select()->count();
+        // $meja= meja::select()->count();
+        // $kategori= kategori::select()->count();
+        $pesanan= pesanan::select()->count();
+        // $penguna= penguna::select()->count();
+        $activity_log= ActivityLog::with('user')->limit(10)->orderBy('id','DESC')->get();
+        return view('manager/laporand',compact('user','pesanan','activity_log'));
 
-    //     $tanggal = date('Y-m-d');
-    //     $data = pesanan::whereDate('created_at',$tanggal)->get();
-    //     // dd($data);
-    //     return view('manager.laporandapat', compact('data'));
-
-    // }
-    public function bln(Request $data ){
-        $tanggal = date('Y-m-d');
-        $bulan = date('m',strtotime($tanggal));
-        $data = pesanan::whereMonth('created_at',$bulan,)->get();
-
-
-        $data = pesanan::where('total_beli', '>', 0)->get()->sum('total_beli');
-        $months = pesanan::select(
-            DB::raw('sum(total_beli) as `sum`'),
-        )
-            ->whereMonth('created_at', $bulan)
-
-
-            ->get();
-            // dd($months);
-
-        return view('manager.laporandapat', compact('data','months'));
-
+        // return view('manager.laporan', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
+
+
     public function create()
     {
 

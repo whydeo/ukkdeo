@@ -31,8 +31,9 @@ Route::resource('pengguna', 'PenggunaController')->middleware('ceklevel:admin');
 // manager
 Route::get('manager/index', [App\Http\Controllers\ManagerController::class, 'index'])->name('index')->middleware('ceklevel:manager');
 Route::get('manager/laporan', [App\Http\Controllers\ManagerController::class, 'laporantrans'])->name('laporantrans')->middleware('ceklevel:manager');
-Route::get('laporanpendapatan', [App\Http\Controllers\ManagerController::class, 'total'])->name('total')->middleware('ceklevel:manager');
-Route::get('laporanpendapatan', [App\Http\Controllers\ManagerController::class, 'bln'])->name('bln')->middleware('ceklevel:manager');
+Route::get('laporanpendapatan', [App\Http\Controllers\ManagerController::class, 'laporandapat'])->name('laporandapat')->middleware('ceklevel:manager');
+Route::get('laporantotal', [App\Http\Controllers\ManagerController::class, 'totall'])->name('totall')->middleware('ceklevel:manager');
+Route::get('logaktiv', [App\Http\Controllers\ManagerController::class, 'log'])->name('log')->middleware('ceklevel:manager');
 Route::get('carimanager', [ManagerController::class, 'cari'])->name('carimanager');
 Route::get('carinama', [ManagerController::class, 'search'])->name('carinama');
 Route::get('caritertentu', [ManagerController::class, 'caris'])->name('caris');

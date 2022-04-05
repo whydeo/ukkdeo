@@ -27,7 +27,8 @@
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
+ <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dash.css') }}" rel="stylesheet">
@@ -36,7 +37,8 @@
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-dark" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-dark text-light">2y1le</div>
+            <div class="sidebar-heading border-bottom bg-dark text-light" ><i class='fab fa-draft2digital' style='font-size:36px'></i>y1l<i class="fa fa-gbp" style="font-size:24px"></i>
+            </div>
             <hr>
             <div class="list-group list-group-flush">
                 @if(auth()->user()->level=="admin")
@@ -49,8 +51,9 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('meja.index')}}">meja</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('kategori.index') }}">kategori</a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporantrans')}}"> laporan transaksi</a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('bln')}}"> laporan transaksi pendapatan </a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('caris')}}"> laporan tertentu</a>
+            <!-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporandapat')}}"> laporan transaksi pendapatan </a> -->
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('log')}}"> log aktivitas  </a>
+            {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('totall')}}"> total  </a> --}}
                 @elseif(auth()->user()->level=="kasir")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
                  <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('datatrans')}}">data transaksi</a>
