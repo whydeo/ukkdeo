@@ -15,8 +15,6 @@
 </div>
 @endif
 <center><h1>CAFEEE ASEEEK ASEEKK</h1></center>
-<button class="btn btn-primary"><a href="{{ route('home') }}">back</a>
-</button>
 <div class="row ms-0" style="height: 84vh;">
     <div class="col-3 form-pemesan p-4">
         <div class="position-fixed text-center">
@@ -58,6 +56,12 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
    pesan sekarang
   </button>
+<button type="button" class="btn btn-success" ><a href="{{ route('home') }}" >
+   KEMBALI
+   </a>
+  </button>
+  <!-- <button class="btn btn-primary"><a href="{{ route('home') }}">back</a>
+</button> -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">

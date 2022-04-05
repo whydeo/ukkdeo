@@ -6,7 +6,7 @@
         <div class="col-md-11">
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <div class="col-lg- col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title">Laporan</h4>
                     </div>
                 </div>
@@ -37,21 +37,39 @@
         <p>{{ $message }}</p>
         </div>
         @endif
- <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                <form class="form" method="get" action="{{ route('carinama') }}">
+
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form class="form" method="get" action="{{ route('caris') }}">
                         <div class="form-group w-100 mb-3">
-                            <label for="search" class="d-block mr-2">Pencarian by named</label>
-                            <input type="text" name="search" class="form-control w-75 d-inline" id="search" placeholder="Masukkan nama pegawai">
+                            <label for="search" class="d-block mr-2">Pencarian by date</label>
+                            <input type="date" name="search" class="form-control w-75 d-inline" id="search" placeholder="Masukkan nama pegawai">
                             <button type="submit" class="btn btn-primary mb-1">Cari</button>
                         </div>
                     </form>
-                    @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                    @endif
+                        @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                        @endif
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form class="form" method="get" action="{{ route('carinama') }}">
+                            <div class="form-group w-100 mb-3">
+                                <label for="search" class="d-block mr-2">Pencarian by named</label>
+                                <input type="text" name="search" class="form-control w-75 d-inline" id="search" placeholder="Masukkan nama pegawai">
+                                <button type="submit" class="btn btn-primary mb-1">Cari</button>
+                            </div>
+                    </form>
+                        @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                        @endif
                     </div>
                 </div>
+            </div>
                <div class="container">
                     <div class="container-fluid">
                             <div class="row">
@@ -79,8 +97,18 @@
                                     </td>
                                     </tr>
                                     @endforeach 
-                                    {{-- @endisset --}}
                                 </table>
+                                    {{-- @endisset --}}
+                                    <tr>
+                                        <td>total pemasukan hari ini RP:{{$datahri[0]->total_beli}}</td>
+                                  </tr>
+                                  <br>
+                                  <tr>
+                                      <td>total pemasukan bulan ini RP: </td>
+                                  </tr>
+                                  
+                             
+                                
                             </div>
         </div>
             </div>

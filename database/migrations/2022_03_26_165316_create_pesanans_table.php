@@ -23,6 +23,7 @@ class CreatePesanansTable extends Migration
             $table->integer('total_beli');
             $table->integer('total_bayar');
             $table->integer('kembalian');
+            $table->string('nama_pegawai');
             $table->timestamps();
         });
     }

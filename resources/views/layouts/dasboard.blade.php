@@ -44,8 +44,8 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('meja.index')}}">meja</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('kategori.index') }}">kategori</a>
             <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporantrans')}}"> laporan transaksi</a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporandapat')}}"> laporan transaksi pendapatan </a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('caris')}}"> laporan tertentu</a>
+            <!-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporandapat')}}"> laporan transaksi pendapatan </a> -->
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('log')}}"> log aktivitas  </a>
                 @elseif(auth()->user()->level=="kasir")
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
                  <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('datatrans')}}">data transaksi</a>

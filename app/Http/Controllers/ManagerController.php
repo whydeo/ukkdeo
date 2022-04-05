@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Kategori;
+use app\models\user;
 use App\Models\Meja;
 use App\Models\Menu;
+use App\Models\Kategori;
 use App\Models\Pesanan;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
+use DB;
 class ManagerController extends Controller
 {
     /**
@@ -26,9 +29,16 @@ class ManagerController extends Controller
 
     public function laporantrans()
     {
-        $data=pesanan::paginate(7);
-        return view ('manager.laporan', compact('data')); 
+       $datahri = DB::table('pesanans')
+                ->select(DB::raw('SUM(total_beli) as total_beli'))
+                ->havingRaw('SUM(total_beli) > ?', [0])
+                ->get();
+        $data=pesanan::paginate(10);
+    
+        return view ('manager.laporan', compact('data','datahri')); 
     }
+
+ 
     public function laporandapat(Request $request)
     {
         $from = $request->from;
@@ -53,11 +63,25 @@ class ManagerController extends Controller
     }
     public function caris(Request $request)
     {
-        $search = $request->search;
-        $data = pesanan::where('created_at', array($search))->paginate(5);
-        dd($data);
-        return view('manager.laporand', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $keyword = $request->search;
+        $data = pesanan::where('created_at', 'like', "%" . $keyword . "%")->paginate(5);
+        return view('manager.laporan', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
+    public function log()
+    {
+        $user= User::select()->count();
+        // $menu= menu::select()->count();
+        // $meja= meja::select()->count();
+        // $kategori= kategori::select()->count();
+        $pesanan= pesanan::select()->count();
+        // $penguna= penguna::select()->count();
+        $activity_log= ActivityLog::with('user')->limit(10)->orderBy('id','DESC')->get();
+        return view('manager/laporand',compact('user','pesanan','activity_log'));
+
+        // return view('manager.laporan', compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+
     public function create()
     {
         
