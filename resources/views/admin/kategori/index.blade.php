@@ -21,7 +21,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table table-bordered">
                     <thead class=" text-primary">
                       <th>
                         Nama
@@ -57,7 +57,7 @@
                               {{ method_field('delete') }}
                               <button type="submit" class="btn btn-sm btn-danger mb-2">
                                 Hapus
-                              </button>                    
+                              </button>
                             </form> --}}
                         </td>
                       </tr>
@@ -100,7 +100,7 @@
       </div>
 
 
-      
+
       @endsection
       @section('script')
         @include('admin.script')

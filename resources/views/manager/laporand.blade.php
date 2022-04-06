@@ -4,9 +4,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            h2
+            <div class="card-header"><h3>Aktivitas Pegawai</h3></div>
+            <hr>
             <div class="block-content col-md-12">
-                <table class="table table-borderles table-striped table-vcenter font-size-sm">
+                <table class="table table-bordered table-striped table-vcenter font-size-sm">
                     <tbody>
                         <th>nama pegawai</th>
                         <th>level user</th>

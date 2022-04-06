@@ -13,7 +13,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', '2y1le') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -22,6 +22,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  {{-- bootstrap icon --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
       <!-- chart js-->
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -45,22 +47,22 @@
             <hr>
             <div class="list-group list-group-flush">
                 @if(auth()->user()->level=="admin")
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('pengguna.index') }}">pegawai</a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('indexlog')}}">log aktifitas pegawai</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}"><i class="bi bi-house-fill fs-5"></i> Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('pengguna.index') }}"><i class="bi bi-person-plus-fill fs-5"></i> User</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('indexlog')}}"><i class="bi bi-door-open-fill fs-5"></i>log aktifitas pegawai</a>
                 @elseif(auth()->user()->level=="manager")
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('index')}}">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu.index')}}">menu</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('meja.index')}}">meja</a>
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('kategori.index') }}">kategori</a>
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporantrans')}}"> laporan transaksi</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('index')}}"><i class="bi bi-house-fill fs-5"></i> Dashboard</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('menu.index')}}"><i class="bi bi-egg-fried fs-5"></i> Menu</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('meja.index')}}"><i class="bi bi-tablet-landscape-fill fs-5"></i> Meja</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('kategori.index') }}"> <i class="bi bi-bookmarks-fill fs-5"></i> Kategori</a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporantrans')}}"><i class="bi bi-newspaper fs-5"></i> Laporan transaksi</a>
             <!-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('laporandapat')}}"> laporan transaksi pendapatan </a> -->
-            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('log')}}"> log aktivitas  </a>
+            <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('log')}}"><i class="bi bi-door-open-fill fs-5"></i> Log aktivitas  </a>
             {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('totall')}}"> total  </a> --}}
                 @elseif(auth()->user()->level=="kasir")
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}">Dashboard</a>
-                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('datatrans')}}">data transaksi</a>
-                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('kasir.index')}}">pesanan</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('home') }}"><i class="bi bi-house-fill fs-5"></i> Dashboard</a>
+                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('datatrans')}}"> <i class="bi bi-piggy-bank-fill fs-5"></i> Data transaksi</a>
+                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{route('kasir.index')}}"><i class="bi bi-bag-plus-fill fs-5"></i> Pesanan</a>
                 @endif
                 {{-- <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="{{ route('coba.index') }}">Coba</a> --}}
@@ -108,13 +110,16 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
+                                    <i class="bi bi-person"></i>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
+                                        <i class="bi bi-door-closed-fill fs-5"></i>
                                     </a>
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

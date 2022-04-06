@@ -14,8 +14,11 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table table-bordered">
                     <thead class=" text-primary">
+                        <th>
+                            NO
+                        </th>
                       <th>
                        Nama
                       </th>
@@ -36,8 +39,9 @@
                       </th>
                     </thead>
                     <tbody>
-                      @foreach($peng as $pengguna)
+                      @foreach($peng as $i=>$pengguna)
                       <tr>
+                          <td>{{ ++$i }}</td>
                       <td>{{$pengguna->name}}</td>
                       <td>{{$pengguna->level}}</td>
                       <td>{{$pengguna->status}}</td>
@@ -52,9 +56,9 @@
                             <button class="btn btn-sm btn-danger" type="submit">hapus</button>
                           </form> --}}
                         </td>
-                      </tr> 
+                      </tr>
                       @endforeach
-                      
+
                     </tbody>
                   </table>
                 </div>
@@ -86,8 +90,8 @@
                             <label for="password">password</label>
                             <input type="password" class="form-control" name="password" id="password" placeholder="masukkan password">
                           </div>
-                
-            
+
+
                     <p class="m-0">level</p>
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="level" id="level1" value="manager">
@@ -99,7 +103,7 @@
                     </div> <br>
                     <span class="text-danger" style="display: none">level harus dipilih</span>
                  </div>
-                 
+
                     <p class="m-0">Status</p>
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="status" id="status1" value="aktif">
@@ -111,8 +115,8 @@
                     </div> <br>
                     <span class="text-danger" style="display: none">status harus dipilih</span>
                 </div>
-                
-            
+
+
                 <div class="modal-footer">
               <button type="button" class="btn btn-secondary tutup-modal" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Submit</button>
@@ -121,7 +125,7 @@
           </div>
         </div>
       </div>
-  
+
         </div>
       @endsection
       @section('script')
