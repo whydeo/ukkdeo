@@ -103,11 +103,11 @@
                                   </tr>
                                   <br>
                                   <tr>
-                                      <td>total pemasukan hari ini RP: {{ $day[0]->total_beli }}</td>
+                                      <td>total pemasukan hari ini RP: {{$output}}</td>
                                   </tr>
                                   <br>
                                   <tr>
-                                      <td>total pemasukan bulan ini RP: {{ $day[0]->total_beli }}</td>
+                                      <td>total pemasukan bulan ini RP: {{$outpat}}</td>
                                   </tr>
 
 
