@@ -50,7 +50,7 @@ class ManagerController extends Controller
         foreach($datass as $entry) {
             $outpat= $entry->sum;
         }
-        // dd($outpat);
+        // dd($outpat); 
         
         $data=pesanan::paginate(10);
 

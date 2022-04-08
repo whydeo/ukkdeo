@@ -24,7 +24,8 @@
     @endif
 
     <form action="{{ route('pengguna.update', $peng[0]->id_penguna) }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    {{ csrf_field() }}
+        {{ method_field('put') }}
          <input type="hidden" name="id_penguna" value="{{ $peng[0]->id_penguna }}">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">

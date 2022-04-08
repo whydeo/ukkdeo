@@ -1,4 +1,4 @@
-@extends('layouts.apps
+@extends('layouts.dasboard
 ')
 @section('style')
 @include('layouts.style')
@@ -17,61 +17,12 @@
 <center>
     <h1 style="font-family: Lucida Handwriting">Cafe 2y1le</h1>
 </center>
-<div class="row ms-0" style="height: 84vh;">
-    <div class="col-3 form-pemesan p-4">
-        <div class="position-fixed text-center">
 
-
-            <div class="mb-3">
-
-            </div>
-        </div>
-    </div>
-    <div class="col-9 menu-makan example">
-        @foreach($dtkat as $kat)
-        @if ($kat->jumlah > 0)
-        <h3 class="text-center text-black">{{ $kat->nama_kategori }}</h3>
-        <div class="container menu_makanan">
-            @foreach($dtmenu as $menu)
-            @if($menu->kategori_id == $kat->id)
+            <div class="container">
             <div class="card">
-                <img src="{{ asset('imagemenu/'.$menu->foto) }}" class="card-img-top" style="width: 200px; height: 150px" alt="{{ $menu->nama_menu }}">
-                <div class="card-body makan" data-id="{{ $menu->id }}">
-                    <h5 class="card-title" data-foto="{{ $menu->foto }}">{{ $menu->nama_menu }}</h5>
-                    <p class="card-text">Rp {{ $menu->harga }}</p>
-                    {{-- <button class="btn btn-primary me-auto">+ Pesan</button> --}}
-                    <div class="tambah_pesan">
-                        <button class="btn btn-primary kurang "> - </button>
-                        <input type="text" value="1" class="qty-pesan" readonly>
-                        <button class="btn btn-primary tambah"> + </button>
-                    </div>
-                </div>
-            </div>
-            @endif
-            @endforeach
-        </div>
-        @endif
-        @endforeach
-    </div>
-</div>
-
-<button type="button" class="btn btn-primary position-absolute bottom-0 end-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Pesan Sekarang
-</button>
-<button type="button" class="btn btn-danger  position-absolute bottom-0 start-0"><a href="{{ route('home') }}" class="text-light" style="text-decoration-line: none;">
-        Kembali
-    </a>
-</button>
-<!-- <button class="btn btn-primary"><a href="{{ route('home') }}">back</a>
-</button> -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">form pemesan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{route('tampung')}}" method="POST" enctype="multipart/form-data">
+            <div class="card-header">
+            <div class="card-body">
+            <form action="{{route('order')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <label for="">nama Pemesan</label>
@@ -111,9 +62,14 @@
                     <label for="">jumblah</label>
                     <input type="number" class="form-control" name="jumblah" id="">
                 </div>
+            </div>
+            </div>
+            </div>
+            </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" value="submit" class="btn btn-primary">bayar </button>
+                    <button type="submit" value="submit" class="btn btn-primary">Pesan </button>
+                    <a class="btn btn-success" href="{{route('kasir.create')}}">balik ke pesanan</a>
+
                 </div>
         </div>
     </div>

@@ -20,5 +20,9 @@ class menu extends Model
     {
         return $this->hasMany(pesan::class);
     }
+    public function order()
+    {
+        return $this->hasMany(order::class);
+    }
 
 }

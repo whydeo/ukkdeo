@@ -9,6 +9,7 @@ use App\Models\Kategori;
 use App\Models\Meja;
 use App\Models\Menu;
 use App\Models\Menupesan;
+use App\Models\order;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
@@ -30,10 +31,35 @@ class KasirController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(request $request)
     {
-         
+        return view('pelanggan.order',[
+            'order'=>order::with('meja','menu')->latest()->get()
+        ]);
     }
+    public function order(request $request)
+    {
+
+        // $id = auth()->user()->id;
+
+        //  dd($id);
+
+        $request->validate([
+            'nama_pemesan' =>'required',
+            'meja_id' =>'required',
+            'menu_id' =>'required',
+            'jumblah' =>'required',
+        ]);
+         order::create([
+            'nama_pemesan'=>$request['nama_pemesan'],
+            'id_meja'=>$request['meja_id'],
+            'id_menu'=>$request['menu_id'],
+            'jumblah'=>$request['jumblah'],
+         ]);
+         return redirect()->route('kasir.create');
+    }
+
+
     public function tampung(Request $datapesan){
         //   dd($datapesan);
        $datapesan->validate([
@@ -43,32 +69,11 @@ class KasirController extends Controller
             'jumblah' =>'required',
         ]);
         
-        // $semuamenu = [];
-        // for ($i=0; $i < count($datapesan->menu_id); $i++) { 
-        //     $ambil = DB::table('menu')->where('id', $datapesan->menu_id[$i])->get();
-
-        //     array_push($semuamenu, $ambil);
-
-        //     $total= 0;
-
-        // }
-        // dd($semuamenu);
+       
         $ambil = DB::table('menu')->where('id', $datapesan->menu_id)->get();
         $meja =DB::table('mejas')->where('id',$datapesan->meja_id)->get();
         // dd($semuamenu,$meja,$datapesan);
         return view ('pelanggan.create', compact('datapesan','ambil','meja')); 
-
-        // $menu = DB::table('menu')->where('id', $datapesan->menu_id);
-        // foreach ($menu as $menus) {
-        //     $res[] = [
-        //        'id' => $datapesan->menu_id, 
-        //     ];
-        //  }; 
-
-        // // $menus=$menu ->toArray();
-        // $meja =DB::table('mejas')->where('id',$datapesan->meja_id)->get();
-        //  dd($res,$meja);
-        // return view ('pelanggan.create', compact('datapesan','res','meja')); 
 
     }
     
@@ -135,5 +140,37 @@ class KasirController extends Controller
     public function destroy(Pesanan $pesanan)
     {
         //
+    }
+
+    public function bayar()
+    {
+        
+        $user = DB::table('orders')->get();
+
+        
+        foreach ($user as $u) {
+            $date = [$u->id_menu];
+            foreach ($date as $d) {
+                echo $d;
+                $a =  DB::table('orders')->where('id', $d)->get();
+                echo $a;
+
+            }
+        }
+        dd($date);
+        $harga_menu = DB::table('menu')->where('id', $user->id_menu)->value('harga');
+
+        $data=[];
+        $dati=[];
+        foreach($user as $entry){
+            $data=$entry->nama_pemesan;
+            $dati=$entry->menu->harga;
+        }
+        
+
+
+        return view('pelanggan.order',[
+            'order'=>order::with('meja','menu')->latest()->get()
+        ]);
     }
 }
